@@ -1,4 +1,7 @@
-angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $document) ->
+angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector) ->
+
+	$document = $injector.get "$document"
+	Shot = $injector.get "Shot"
 
 	$scope.selectedShots = []
 	$scope.diffMode = "subtraction"
@@ -74,7 +77,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $document
 				captureWidth = Math.round width - (width - maxWidth)
 				captureHeight = blockSize
 
-				return
+				return {
 					offset: shot.screenPosition
 					data: shot.canvasContext.getImageData captureStartX, captureStartY, captureWidth, captureHeight
 					height: height
@@ -82,6 +85,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $document
 					startX: startX
 					startY: startY
 					block: blockSize
+				}
 
 			block = Math.max.apply(Math, _.pluck images, "block")
 			startY = Math.max.apply(Math, _.pluck images, "startY")
