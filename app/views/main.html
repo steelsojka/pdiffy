@@ -1,0 +1,330 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<ul class="nav">
+			<li class="dropdown">
+				<a class="dropdown-toggle">
+					File
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a ng-click="broadcast('openUploadModal')">
+							<i class="icon-upload-alt"></i> Upload Images...
+						</a>
+					</li>
+					<li>
+						<a ng-click="broadcast('openDiffModal')">
+							<i class="icon-adjust"></i> Perform Difference...
+						</a>
+					</li>
+				</ul>
+			</li>
+			<li class="dropdown">
+				<a class="dropdown-toggle">
+					Groups
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<a><i class="icon-group"></i> New Group</a>
+					</li>
+					<li class="divider"></li>
+					<li class="nav-header">Created Groups</li>
+					<li ng-repeat="group in files">
+						<a ng-click="onPageChange(this)">{{group.source.DATA.source}}</a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+</div>
+
+<!--- <div>
+	<ul class="breadcrumb">
+		<li>
+			<a>{{activeGroup.source.displayURL}}</a>
+			<span class="divider"><i class="icon-exchange"></i></span>
+		</li>
+		<li>
+			<a>{{tabURL}}</a>
+		</li>
+	</ul>
+</div> --->
+
+<div ng-controller="groupCtrl" class="group-container">
+	<div class="controls" 
+			 ng-class="{'dock-left': dock.position == 'left', 
+									'dock-right': dock.position == 'right',
+									'fixed': dock.pinned,
+									'hidden-left': dock.hidden && dock.position == 'left',
+									'hidden-right': dock.hidden && dock.position == 'right'}">
+		<ul class="nav nav-list">
+			<li class="nav-header">Screen Shots ({{activeGroup.SHOTS.length}})</li>
+			<li ng-click="setCurrentTab(shot)" 
+					 ng-repeat="shot in activeGroup.SHOTS"
+					 ng-class="{active: activeGroup.currentTab == shot.id}">
+					 <a>
+						<i ng-click="shot.show = !shot.show" 
+							 ng-class="{'icon-eye-open': shot.show, 'icon-eye-close': !shot.show}"></i>
+						<i ng-click="shot.showDifference = !shot.showDifference" 
+							 ng-class="{'icon-check': shot.showDifference, 
+													'icon-check-empty': !shot.showDifference,
+													'icon-check-minus': shot.TYPE == 'source' || shot.TYPE == 'upload'}"></i>
+						<div class="url-display">{{shot.displayURL}}</div>
+						<i class="icon-remove" ng-click="removeShot(shot)"></i>
+						<i class="font-red icon-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></i>
+					 </a>
+			</li>
+			<li class="nav-header">Generated Differences ({{activeGroup.generatedDifferences.length}})</li>
+			<li ng-click="setCurrentTab(shot)" 
+					ng-repeat="shot in activeGroup.generatedDifferences"
+					ng-class="{active: activeGroup.currentTab == shot.id}">
+				<a>
+					<i ng-click="shot.show = !shot.show" 
+						 ng-class="{'icon-eye-open': shot.show, 'icon-eye-close': !shot.show}"></i>
+					<div class="url-display">Difference {{$index + 1}}</div>
+					<i class="font-red icon-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></i>
+					<i class="pull-right icon-remove" ng-click="removeGeneratedDifference()"></i>
+				</a>
+			</li>
+		</ul>
+		<div class="tab-controls">
+			<div ng-controller="tabControlsCtrl" 
+					 ng-repeat="shot in activeGroup.SHOTS"
+					 ng-include src="'controls.html'" 
+					 ng-show="activeGroup.currentTab == shot.id">
+			</div>
+			<div ng-controller="tabControlsCtrl" 
+					 ng-repeat="shot in activeGroup.generatedDifferences"
+					 ng-include src="'controls.html'" 
+					 ng-show="activeGroup.currentTab == shot.id">
+			</div>
+		</div>
+		<div class="btn-group position-controls">
+			<button class="btn" type="button" ng-click="dock.position = 'left'">
+				<i class="icon-arrow-left"></i>
+			</button>
+			<button class="btn" type="button" ng-click="dock.position = 'right'">
+				<i class="icon-arrow-right"></i>
+			</button>
+			<button class="btn" ng-click="onScrollTop()">
+				<i class="icon-long-arrow-up"></i>
+			</button>
+			<button class="btn" ng-click="onScrollBottom()">
+				<i class="icon-long-arrow-down"></i>
+			</button>
+			<button class="btn" ng-click="$broadcast('centerElements')">
+				<i class="icon-align-center"></i>
+			</button>
+			<button class="btn" type="button" ng-model="dock.pinned" btn-checkbox>
+				<i class="icon-pushpin"></i>
+			</button>
+		</div>
+		<div class="expand-tab" ng-click="dock.hidden = !dock.hidden">
+			<i ng-class="{'icon-double-angle-left': (dock.position == 'right' && dock.hidden)
+									|| (dock.position == 'left' && !dock.hidden),
+										'icon-double-angle-right': (dock.position == 'left' && dock.hidden)
+									|| (dock.position == 'right' && !dock.hidden)}"
+					ng-click="dock.hidden = false"></i>
+		</div>
+	</div>
+	
+	<div ng-repeat="shot in activeGroup.SHOTS" center class="shot-container" 
+			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
+		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 
+				 animate-time="shot.screenAnimateTime" 
+				 src="shot.SCREEN.PATH"
+				 ng-style="{opacity: shot.screenOpacity, 
+										top: shot.screenPosition.y + 'px', 
+										left: shot.screenPosition.x + 'px'}"></canvas>
+		<div class="difference-shot" ng-hide="shot.TYPE == 'upload'" ng-style="{opacity: shot.differenceOpacity}">
+			<img class="screen-shot" animate-opacity="shot.differenceAnimate" 
+				 animate-time="shot.differenceAnimateTime"
+				 ng-src="{{shot.DIFF.PATH}}" ng-show="shot.showDifference"
+				 ng-style="{top: shot.differencePosition.y + 'px', 
+										left: shot.differencePosition.x + 'px'}">
+		</div>
+	</div>
+	<div ng-repeat="shot in activeGroup.generatedDifferences"
+			 class="shot-container" center
+			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
+		<canvas class="screen-shot" buffer-canvas buffers="shot.buffers" 
+						pixel-width="shot.width" pixel-height="shot.height" 
+						animate-opacity="shot.differenceAnimate" 
+						animate-time="shot.differenceAnimateTime"
+						ng-style="{opacity: shot.differenceOpacity, 
+											 top: shot.differencePosition.y + 'px', 
+											 left: shot.differencePosition.x + 'px'}"></canvas>>
+		</canvas>
+	</div>
+</div>
+
+<!-- Difference Modal -->
+
+<div modal="diffModal.open" ng-controller="differenceCtrl" 
+		 close="diffModal.open = false" 
+		 options="diffModal.options">
+	<div class="modal-header">
+		<h4>Perform Differences</h4>
+	</div>
+	<div class="modal-body">
+		<h5>Select images you want to perform differences on.</h5>
+		<table class="table table-condensed table-hover">
+			<tr ng-repeat="shot in currentShots" 
+					ng-click="shot.selectedForDifference = !shot.selectedForDifference"
+					ng-class="{success: shot.selectedForDifference}">
+
+				<td><i class="icon-file"></i></td>
+				<td>{{shot.displayURL}}</td>
+			</tr>
+		</table>
+		<form class="">
+			<label for="mode">Mode:</label>
+			<select name="mode" ng-model="diffMode" id="">
+				<option value="subtraction">Subtraction</option>
+				<option value="heatmap">Heatmap</option>
+				<option value="block">Block</option>
+			</select>
+			<label for="threshold">Threshold:</label>
+			<input type="number" max="255" min="0" name="threshold" ng-model="diffThreshold">
+			
+		</form>
+		<div class="error" ng-show="diffModal.showError">{{diffModal.error}}</div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" ng-click="diffModal.open = false">Cancel</a>
+		<a class="btn btn-primary" ng-click="performDiff()">Perform</a>
+	</div>
+</div>
+
+<!-- File Upload modal -->
+
+<div modal="open" ng-controller="uploaderCtrl"
+		 close="open = false" options="options">
+	<div class="modal-header">
+		<h4>Upload Images</h4>
+	</div>
+	<div class="modal-body">
+		<h5>Select image files you want to upload.</h5>
+		<table class="table table-condensed table-hover">
+			<tr ng-repeat="file in uploadedFiles">
+				<td><i class="icon-file"></i></td>
+				<td>{{file.name}}</td>
+			</tr>
+		</table>
+		<form>
+			<input file-upload="onFileSelect($files)" type="file" multiple upload>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" ng-click="open = false">Cancel</a>
+		<a class="btn btn-primary" ng-click="upload()">Upload</a>
+	</div>
+</div>
+
+<!-- Alerts -->
+
+<div class="alerts fixed" ng-class="{'dock-left': dock.position == 'right'}">
+	<alert ng-repeat="alert in alerts" type="alert.type" close="removeAlert(alert._id)">
+		<i class="icon-spin icon-spinner" ng-show="alert.loading"></i> {{alert.msg}}
+		<div ng-show="alert.progress">
+			<progress percent="alert.progressPercent" class=""></progress>
+		</div>
+	</alert>
+</div>
+
+
+<script type="text/ng-template" id="controls.html">
+	<div class="control-list">
+		<div class="control-section" ng-show="shot.TYPE != 'genDiff'" ng-class="{disabled: !shot.show}">
+			<label>Screen Opacity</label>
+			<input slider="onOpacityChange(shot.id, $value)" ng-disabled="!shot.show || shot.screenAnimate" type="range" min="0" max="1" step="0.01" value="1"/>
+			<div class="btn-group">
+				<button class="btn btn-mini" type="button" ng-click="shot.screenAnimate = false" ng-disabled="!shot.show">
+					<i class="icon-stop"></i>
+				</button>
+				<button class="btn btn-mini" type="button" ng-model="shot.screenAnimate" 
+								ng-change="onScreenAnimate()" btn-checkbox ng-disabled="!shot.show">
+					<i class="icon-play"></i>
+				</button>
+			</div>
+			<div class="time-input mini-input input-prepend input-append">
+				<span class="add-on">Time:</span>
+				<input class="input-mini" ng-model="shot.screenAnimateTime" type="number">
+				<span class="add-on">s</span>
+			</div>
+		</div>
+		
+		<div class="control-section position" ng-show="shot.TYPE != 'genDiff'" ng-class="{disabled: !shot.show}">
+			<label>Screen Position</label>
+			<div class="mini-input input-prepend">
+				<span class="add-on">x</span>
+				<input class="input-mini" ng-disabled="!shot.show" type="number" ng-model="shot.screenPosition.x">
+			</div>
+			<div class="mini-input input-prepend">
+				<span class="add-on">y</span>
+				<input class="input-mini"  ng-disabled="!shot.show" type="number" ng-model="shot.screenPosition.y">
+			</div>
+			<button class="btn btn-mini" ng-click="resetPosition(shot.screenPosition)">
+				<i class="icon-refresh"></i>
+			</button>
+		</div>
+
+		<div class="control-section" ng-class="{disabled: !shot.showDifference || !shot.show}" 
+				 ng-show="shot.TYPE != 'source' && shot.TYPE != 'upload'">
+			<label>Difference Opacity</label>
+			<input slider="onDiffOpacityChange(shot.id, $value)" 
+						 ng-disabled="!shot.showDifference || !shot.show || shot.differenceAnimate" 
+						 type="range" min="0" max="1" step="0.01" value="1"/>
+				<div class="btn-group">
+					<button class="btn btn-mini" ng-click="shot.differenceAnimate = false" ng-disabled="!shot.showDifference || !shot.show">
+						<i class="icon-stop"></i>
+					</button>
+					<button class="btn btn-mini" ng-model="shot.differenceAnimate" btn-checkbox ng-disabled="!shot.showDifference || !shot.show">
+						<i class="icon-play"></i>
+					</button>
+				</div>
+				<div class="time-input mini-input input-prepend input-append">
+					<span class="add-on">Time:</span>
+					<input class="input-mini" ng-disabled="!shot.showDifference || !shot.show" ng-model="shot.differenceAnimateTime" type="number">
+					<span class="add-on">s</span>
+				</div>
+		</div>
+
+		<div class="control-section position" ng-class="{disabled: !shot.showDifference || !shot.show}" 
+				 ng-show="shot.TYPE != 'source' && shot.TYPE != 'upload'">
+			<label>Difference Position</label>
+			<div class="mini-input input-prepend">
+				<span class="add-on">x</span>
+				<input class="input-mini" ng-disabled="!shot.showDifference || !shot.show" type="number" ng-model="shot.differencePosition.x">
+			</div>
+			<div class="mini-input input-prepend">
+				<span class="add-on">y</span>
+				<input class="input-mini" ng-disabled="!shot.showDifference || !shot.show" type="number" ng-model="shot.differencePosition.y">
+			</div>
+			<button class="btn btn-mini" ng-click="resetPosition(shot.differencePosition)">
+				<i class="icon-refresh"></i>
+			</button>
+		</div>
+		<div class="control-section" ng-show="shot.TYPE != 'source' && shot.TYPE != 'upload'">
+			<label>Info</label>
+			<table class="table table-condensed">
+				<tr>
+					<td>Total Pixels</td>
+					<td>{{shot.DATA.totalPixels | number}}</td>
+				</tr>
+				<tr>
+					<td>Same Pixels</td>
+					<td>{{shot.DATA.numberOfSamePixels | number}}</td>
+				</tr>
+				<tr>
+					<td>Different Pixels</td>
+					<td>{{shot.DATA.numberOfDifferentPixels | number}}</td>
+				</tr>
+				<tr>
+					<td>Difference Ratio</td>
+					<td>{{shot.DATA.differenceRatio | percent}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+</script>
+
