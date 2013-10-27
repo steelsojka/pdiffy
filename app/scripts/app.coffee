@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('pdifference', [
+angular.module('pdifferenceApp', [
 	'ngResource',
 	'ui.bootstrap'
 ]).config ($routeProvider) ->

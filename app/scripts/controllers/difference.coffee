@@ -4,6 +4,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 	Shot = $injector.get "Shot"
 
 	$scope.selectedShots = []
+	$scope.currentShots = []
 	$scope.diffMode = "subtraction"
 	$scope.diffThreshold = 0
 	$scope.diffModal =
@@ -152,6 +153,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 			$scope.selectedShots = []
 		else
 			setCurrentShots()
+			$scope.diffModal.open = false if $scope.currentShots.length < 2
 
 	$scope.$on "openDiffModal", -> $scope.diffModal.open = true
 	$scope.$on "closeDiffModal", -> $scope.diffModal.open = false

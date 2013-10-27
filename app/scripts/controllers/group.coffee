@@ -1,6 +1,6 @@
 angular.module("pdifferenceApp").controller "groupCtrl", ($scope) ->
 
-	$scope.activeGroup.currentTab = $scope.activeGroup.shots[0].id;
+# 	$scope.activeGroup.currentTab = $scope.activeGroup.shots[0].id;
 
 	$scope.setCurrentTab = (shot) ->
 		$scope.activeGroup.currentTab = shot.id

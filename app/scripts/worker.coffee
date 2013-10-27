@@ -10,3 +10,56 @@ getPixel = (arr, i) ->
 	output.unshift pix.data.data[i] for pix in arr
 	return output
 
+checkDifference = (r, g, b) -> r > 0 or g > 0 or b > 0
+
+checkThreshold = (r, g, b, theshold) ->
+	r <= threshold or g <= threshold or b <= threshold
+
+self.addEventListener "message", (e) ->
+	data = e.data.imageData
+	outputData =
+		numberOfSamePixels: 0
+		numberOfDifferentPixels: 0
+		totalPixels: 0
+	context = e.data.contextData
+	contextData = content.data
+	maxLength = Math.max.apply(Math, data.map (a) -> a.data.data.length)
+	mode = e.data.mode
+	threshold = e.data.threshold or 0
+
+	for i in [0...maxLength]
+		r = compare getPixel(data, i)
+		g = compare getPixel(data, i + 1)
+		b = compare getPixel(data, i + 2)
+
+		isDifferent = checkDifference r, g, b
+		isUnderThreshold = checkThreshold r, g, b, threshold
+
+		if isUnderThreshold
+			r = g = b = 0
+			outputData.numberOfSamePixels++
+		else 
+			if mode is "heatmap" and isDifferent
+				maxValue = Math.max r, g, b
+				r = g = maxValue
+				b = 0
+			else if mode is "block" and isDifferent
+				r = g = 255
+				b = 0
+		
+		contextData[i] = r
+		contextData[i + 1] = g
+		contextData[i + 2] = b
+		contextData[i + 3] = 255 
+
+		outputData.totalPixels++
+	
+	self.postMessage
+		event: "done"
+		id: e.data.id
+		data: context
+		y: e.data.startY
+		block: e.data.block
+		stats: outputData
+
+	self.close()
