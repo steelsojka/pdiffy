@@ -131,14 +131,14 @@
 			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 
 				 animate-time="shot.screenAnimateTime" 
-				 src="shot.SCREEN.PATH"
+				 src="shot.screen.path"
 				 ng-style="{opacity: shot.screenOpacity, 
 										top: shot.screenPosition.y + 'px', 
 										left: shot.screenPosition.x + 'px'}"></canvas>
 		<div class="difference-shot" ng-hide="shot.type == 'upload'" ng-style="{opacity: shot.differenceOpacity}">
 			<img class="screen-shot" animate-opacity="shot.differenceAnimate" 
 				 animate-time="shot.differenceAnimateTime"
-				 ng-src="{{shot.DIFF.PATH}}" ng-show="shot.showDifference"
+				 ng-src="{{shot.diff.path}}" ng-show="shot.showDifference"
 				 ng-style="{top: shot.differencePosition.y + 'px', 
 										left: shot.differencePosition.x + 'px'}">
 		</div>
