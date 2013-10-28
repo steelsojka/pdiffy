@@ -28,8 +28,8 @@
 					</li>
 					<li class="divider"></li>
 					<li class="nav-header">Created Groups</li>
-					<li ng-repeat="group in files">
-						<a ng-click="onPageChange(this)">{{group.source.DATA.source}}</a>
+					<li ng-repeat="group in groups">
+						<a ng-click="onPageChange(this)">{{group.name}}</a>
 					</li>
 				</ul>
 			</li>
@@ -57,9 +57,9 @@
 									'hidden-left': dock.hidden && dock.position == 'left',
 									'hidden-right': dock.hidden && dock.position == 'right'}">
 		<ul class="nav nav-list">
-			<li class="nav-header">Screen Shots ({{activeGroup.SHOTS.length}})</li>
+			<li class="nav-header">Screen Shots ({{activeGroup.shots.length}})</li>
 			<li ng-click="setCurrentTab(shot)" 
-					 ng-repeat="shot in activeGroup.SHOTS"
+					 ng-repeat="shot in activeGroup.shots"
 					 ng-class="{active: activeGroup.currentTab == shot.id}">
 					 <a>
 						<i ng-click="shot.show = !shot.show" 
@@ -67,7 +67,7 @@
 						<i ng-click="shot.showDifference = !shot.showDifference" 
 							 ng-class="{'icon-check': shot.showDifference, 
 													'icon-check-empty': !shot.showDifference,
-													'icon-check-minus': shot.TYPE == 'source' || shot.TYPE == 'upload'}"></i>
+													'icon-check-minus': shot.type == 'source' || shot.type == 'upload'}"></i>
 						<div class="url-display">{{shot.displayURL}}</div>
 						<i class="icon-remove" ng-click="removeShot(shot)"></i>
 						<i class="font-red icon-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></i>
@@ -88,7 +88,7 @@
 		</ul>
 		<div class="tab-controls">
 			<div ng-controller="tabControlsCtrl" 
-					 ng-repeat="shot in activeGroup.SHOTS"
+					 ng-repeat="shot in activeGroup.shots"
 					 ng-include src="'controls.html'" 
 					 ng-show="activeGroup.currentTab == shot.id">
 			</div>
@@ -127,7 +127,7 @@
 		</div>
 	</div>
 	
-	<div ng-repeat="shot in activeGroup.SHOTS" center class="shot-container" 
+	<div ng-repeat="shot in activeGroup.shots" center class="shot-container" 
 			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 
 				 animate-time="shot.screenAnimateTime" 
@@ -135,7 +135,7 @@
 				 ng-style="{opacity: shot.screenOpacity, 
 										top: shot.screenPosition.y + 'px', 
 										left: shot.screenPosition.x + 'px'}"></canvas>
-		<div class="difference-shot" ng-hide="shot.TYPE == 'upload'" ng-style="{opacity: shot.differenceOpacity}">
+		<div class="difference-shot" ng-hide="shot.type == 'upload'" ng-style="{opacity: shot.differenceOpacity}">
 			<img class="screen-shot" animate-opacity="shot.differenceAnimate" 
 				 animate-time="shot.differenceAnimateTime"
 				 ng-src="{{shot.DIFF.PATH}}" ng-show="shot.showDifference"
@@ -234,7 +234,7 @@
 
 <script type="text/ng-template" id="controls.html">
 	<div class="control-list">
-		<div class="control-section" ng-show="shot.TYPE != 'genDiff'" ng-class="{disabled: !shot.show}">
+		<div class="control-section" ng-show="shot.type != 'genDiff'" ng-class="{disabled: !shot.show}">
 			<label>Screen Opacity</label>
 			<input slider="onOpacityChange(shot.id, $value)" ng-disabled="!shot.show || shot.screenAnimate" type="range" min="0" max="1" step="0.01" value="1"/>
 			<div class="btn-group">
@@ -253,7 +253,7 @@
 			</div>
 		</div>
 		
-		<div class="control-section position" ng-show="shot.TYPE != 'genDiff'" ng-class="{disabled: !shot.show}">
+		<div class="control-section position" ng-show="shot.type != 'genDiff'" ng-class="{disabled: !shot.show}">
 			<label>Screen Position</label>
 			<div class="mini-input input-prepend">
 				<span class="add-on">x</span>
@@ -269,7 +269,7 @@
 		</div>
 
 		<div class="control-section" ng-class="{disabled: !shot.showDifference || !shot.show}" 
-				 ng-show="shot.TYPE != 'source' && shot.TYPE != 'upload'">
+				 ng-show="shot.type != 'source' && shot.type != 'upload'">
 			<label>Difference Opacity</label>
 			<input slider="onDiffOpacityChange(shot.id, $value)" 
 						 ng-disabled="!shot.showDifference || !shot.show || shot.differenceAnimate" 
@@ -290,7 +290,7 @@
 		</div>
 
 		<div class="control-section position" ng-class="{disabled: !shot.showDifference || !shot.show}" 
-				 ng-show="shot.TYPE != 'source' && shot.TYPE != 'upload'">
+				 ng-show="shot.type != 'source' && shot.type != 'upload'">
 			<label>Difference Position</label>
 			<div class="mini-input input-prepend">
 				<span class="add-on">x</span>
@@ -304,7 +304,7 @@
 				<i class="icon-refresh"></i>
 			</button>
 		</div>
-		<div class="control-section" ng-show="shot.TYPE != 'source' && shot.TYPE != 'upload'">
+		<div class="control-section" ng-show="shot.type != 'source' && shot.type != 'upload'">
 			<label>Info</label>
 			<table class="table table-condensed">
 				<tr>

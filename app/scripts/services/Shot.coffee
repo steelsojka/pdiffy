@@ -14,6 +14,8 @@ angular.module('pdifferenceApp').factory 'Shot', ->
 			@differenceAnimate = false
 			@screenPosition = {x: 0, y: 0 }
 			@differencePosition = {x: 0, y: 0 }
-
+			@screenOpacity = 1
+			@differenceOpacity = 1
+			@selectedForDifference = false
+			@canvasContext = null
 	return Shot
-

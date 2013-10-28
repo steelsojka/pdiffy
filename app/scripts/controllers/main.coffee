@@ -6,8 +6,9 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 	$window = $injector.get "$window"
 	$document = $injector.get "$document"
 	$rootScope = $injector.get "$rootScope"
+	Group = $injector.get "Group"
 
-	$scope.dock = 
+	$scope.dock =
 		position: "left"
 		pinned: true
 		hidden: false
@@ -15,11 +16,9 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 	$scope.alerts = []
 
 	$scope.getAlertById = (id) ->
-		_.find $scope.alerts, (alert) ->
-			alert._id is id
+		_.find $scope.alerts, (alert) -> alert._id is id
 
-	$scope.removeAlert = (id) ->
-		_.pull $scope.alerts, $scope.getAlertById(id)
+	$scope.removeAlert = (id) -> _.pull $scope.alerts, $scope.getAlertById(id)
 
 	$scope.updateAlertProgress = (id, val) ->
 		alert = $scope.getAlertById id
@@ -30,8 +29,7 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 		$scope.alerts.push alert
 		return alert._id
 
-	$scope.broadcast = (event) ->
-		$rootScope.$broadcast.apply this, arguments
+	$scope.broadcast = (event) -> $rootScope.$broadcast.apply this, arguments
 
 	$scope.onPageChange = (e) ->
 		$scope.activeGroup = @group
@@ -40,12 +38,11 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 
 	$scope.onScrollTop = -> $window.scrollTo 0,0
 
-	$scope.onScrollBottom = -> 
-		$window.scrollTo 0, $document.body.scrollHeight
+	$scope.onScrollBottom = -> $window.scrollTo 0, $document.body.scrollHeight
 	
 	$scope.$on "groupTabChange", (e, shotURL) -> $scope.tabURL = shotURL
 
-	$scope.files = []
-	$scope.activeGroup = null
+	$scope.groups = [new Group()]
+	$scope.activeGroup = $scope.groups[0]
 
 	return
