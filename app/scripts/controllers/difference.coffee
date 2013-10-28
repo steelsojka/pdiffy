@@ -135,7 +135,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 				outputData.numberOfDifferentPixels += a.stats.numberOfDifferencePixels
 				outputData.totalPixels += a.stats.totalPixels
 
-			outputData.differenceRatio - outputData.numberOfDifferentPixels / outputData.totalPixels
+			outputData.differenceRatio = outputData.numberOfDifferentPixels / outputData.totalPixels
 
 			shot = new Shot
 				buffers: data
