@@ -58,6 +58,11 @@
 									'hidden-right': dock.hidden && dock.position == 'right'}">
 		<ul class="nav nav-list">
 			<li class="nav-header">Screen Shots ({{activeGroup.shots.length}})</li>
+			<li ng-show="activeGroup.shots.length < 1">
+				<a ng-click="broadcast('openUploadModal')">
+					Upload an image
+				</a>
+			</li>
 			<li ng-click="setCurrentTab(shot)" 
 					 ng-repeat="shot in activeGroup.shots"
 					 ng-class="{active: activeGroup.currentTab == shot.id}">
@@ -74,6 +79,9 @@
 					 </a>
 			</li>
 			<li class="nav-header">Generated Differences ({{activeGroup.generatedDifferences.length}})</li>
+			<li ng-show="activeGroup.generatedDifferences.length < 1">
+				No differences
+			</li>
 			<li ng-click="setCurrentTab(shot)" 
 					ng-repeat="shot in activeGroup.generatedDifferences"
 					ng-class="{active: activeGroup.currentTab == shot.id}">
