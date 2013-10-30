@@ -7,13 +7,12 @@ compare = (pixels) ->
 
 getPixel = (arr, i) ->
 	output = []
-	output.unshift pix.data.data[i] for pix in arr
+	output.unshift pix.data.data[i] for pix in arr by -1
 	return output
 
 checkDifference = (r, g, b) -> r > 0 or g > 0 or b > 0
 
-checkThreshold = (r, g, b, theshold) ->
-	r <= threshold or g <= threshold or b <= threshold
+checkThreshold = (r, g, b, threshold) -> r <= threshold and g <= threshold and b <= threshold
 
 self.addEventListener "message", (e) ->
 	data = e.data.imageData
@@ -22,12 +21,12 @@ self.addEventListener "message", (e) ->
 		numberOfDifferentPixels: 0
 		totalPixels: 0
 	context = e.data.contextData
-	contextData = content.data
+	contextData = context.data
 	maxLength = Math.max.apply(Math, data.map (a) -> a.data.data.length)
 	mode = e.data.mode
 	threshold = e.data.threshold or 0
 
-	for i in [0...maxLength]
+	for i in [0...maxLength] by 4
 		r = compare getPixel(data, i)
 		g = compare getPixel(data, i + 1)
 		b = compare getPixel(data, i + 2)
@@ -38,7 +37,9 @@ self.addEventListener "message", (e) ->
 		if isUnderThreshold
 			r = g = b = 0
 			outputData.numberOfSamePixels++
-		else 
+		else
+			outputData.numberOfDifferentPixels++
+
 			if mode is "heatmap" and isDifferent
 				maxValue = Math.max r, g, b
 				r = g = maxValue
@@ -50,7 +51,7 @@ self.addEventListener "message", (e) ->
 		contextData[i] = r
 		contextData[i + 1] = g
 		contextData[i + 2] = b
-		contextData[i + 3] = 255 
+		contextData[i + 3] = 255
 
 		outputData.totalPixels++
 	

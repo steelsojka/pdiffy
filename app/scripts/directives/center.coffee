@@ -9,9 +9,9 @@ angular.module("pdifferenceApp").directive "center", ($injector) ->
 				"left": "50%"
 				"margin-left": -(element[0].clientWidth / 2) + "px"
 
-		scope.centerElement -> $timeout adjust, 0
+		scope.centerElement = -> $timeout adjust, 0
 
-		scope.$on "centerElements", scope.centerElement 
+		scope.$on "centerElements", scope.centerElement
 
 		angular.element($window).bind "resize", _.throttle(adjust, 50)
 

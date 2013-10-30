@@ -1,11 +1,14 @@
 angular.module('pdifferenceApp').factory 'Shot', ->
 	class Shot
-		constructor: ->
+		constructor: (options) ->
 			@id = _.uniqueId()
 			@show = true
 			@data = {}
 			@type = "upload"
 			@displayURL = ""
+			@height = 0
+			@width = 0
+			@buffers = []
 			@screen =
 				path: ""
 			@screenAnimateTime = 1
@@ -18,4 +21,6 @@ angular.module('pdifferenceApp').factory 'Shot', ->
 			@differenceOpacity = 1
 			@selectedForDifference = false
 			@canvasContext = null
+
+			angular.extend this, options
 	return Shot

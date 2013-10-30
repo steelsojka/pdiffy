@@ -4,25 +4,14 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 	Shot = $injector.get "Shot"
 
 	$scope.selectedShots = []
-	$scope.currentShots = []
 	$scope.diffMode = "subtraction"
 	$scope.diffThreshold = 0
-	$scope.diffModal =
-		open: false
-		options:
-			backdropFade: true
-			dialogFade: true
-			keyboard: true
-		showError: false
-		error: ""
 
 	setCurrentShots = ->
-		$scope.currentShots = $scope.currentShots.map (shot) ->
-			shot.selectedForDifference = false
-			return shot
+		$scope.activeGroup.shots.forEach (shot) ->	shot.selectedForDifference = false
 
 	$scope.performDiff = ->
-		$scope.selectedShots = _.filter $scope.currentShots, (shot) ->
+		$scope.selectedShots = _.filter $scope.activeGroup.shots, (shot) ->
 			return shot.selectedForDifference
 
 		if $scope.selectedShots.length < 2
@@ -30,14 +19,14 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 			$scope.diffModal.showError = true
 			return
 
-		$scope.diffModal.open = false;
+		$scope.diffModal.open = false
 
 		loadingAlertId = $scope.addAlert
 			msg: "Performing difference..."
 			loading: true
 			progress: true
 
-		tempCanvas = $document[0].createElement 'canvas' 
+		tempCanvas = $document[0].createElement 'canvas'
 
 		workerCount = 4
 		workersFinished = 0
@@ -65,8 +54,8 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 
 		tempContext = tempCanvas.getContext '2d'
 	
-		for i in [0...workerCount] 
-			worker = new Worker "worker.js"
+		for i in [0...workerCount]
+			worker = new Worker "scripts/worker.js"
 
 			images = _.map $scope.selectedShots, (shot) ->
 				width = shot.canvasContext.canvas.width
@@ -127,12 +116,12 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 
 			outputData =
 				numberOfSamePixels: 0
-				numberOfDifferencePixels: 0
+				numberOfDifferentPixels: 0
 				totalPixels: 0
 
 			angular.forEach data, (a) ->
 				outputData.numberOfSamePixels += a.stats.numberOfSamePixels
-				outputData.numberOfDifferentPixels += a.stats.numberOfDifferencePixels
+				outputData.numberOfDifferentPixels += a.stats.numberOfDifferentPixels
 				outputData.totalPixels += a.stats.totalPixels
 
 			outputData.differenceRatio = outputData.numberOfDifferentPixels / outputData.totalPixels
@@ -153,7 +142,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 			$scope.selectedShots = []
 		else
 			setCurrentShots()
-			$scope.diffModal.open = false if $scope.currentShots.length < 2
+			$scope.diffModal.open = false if $scope.activeGroup.shots.length < 2
 
 	$scope.$on "openDiffModal", -> $scope.diffModal.open = true
 	$scope.$on "closeDiffModal", -> $scope.diffModal.open = false

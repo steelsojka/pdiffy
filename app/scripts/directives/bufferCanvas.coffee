@@ -9,3 +9,5 @@ angular.module("pdifferenceApp").directive "bufferCanvas", ($parse) ->
 
 		ctx.putImageData buffer.data, 0, buffer.y for buffer in buffers
 
+		return
+

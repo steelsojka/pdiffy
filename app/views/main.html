@@ -12,7 +12,7 @@
 						</a>
 					</li>
 					<li>
-						<a ng-click="broadcast('openDiffModal')">
+						<a ng-click="diffModal.open = true">
 							<i class="icon-adjust"></i> Perform Difference...
 						</a>
 					</li>
@@ -176,7 +176,7 @@
 	<div class="modal-body">
 		<h5>Select images you want to perform differences on.</h5>
 		<table class="table table-condensed table-hover">
-			<tr ng-repeat="shot in currentShots" 
+			<tr ng-repeat="shot in activeGroup.shots" 
 					ng-click="shot.selectedForDifference = !shot.selectedForDifference"
 					ng-class="{success: shot.selectedForDifference}">
 
@@ -218,7 +218,7 @@
 				<td>{{file.name}}</td>
 			</tr>
 		</table>
-		<form name="upload">
+		<form>
 			<input file-upload="onFileSelect($files)" name="files[]" type="file" multiple upload>
 		</form>
 	</div>

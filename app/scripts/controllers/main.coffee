@@ -13,6 +13,16 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 		pinned: true
 		hidden: false
 
+
+	$scope.diffModal =
+		open: false
+		options:
+			backdropFade: true
+			dialogFade: true
+			keyboard: true
+		showError: false
+		error: ""
+
 	$scope.alerts = []
 
 	$scope.getAlertById = (id) ->
