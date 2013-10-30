@@ -218,8 +218,8 @@
 				<td>{{file.name}}</td>
 			</tr>
 		</table>
-		<form>
-			<input file-upload="onFileSelect($files)" type="file" multiple upload>
+		<form name="upload">
+			<input file-upload="onFileSelect($files)" name="files[]" type="file" multiple upload>
 		</form>
 	</div>
 	<div class="modal-footer">
