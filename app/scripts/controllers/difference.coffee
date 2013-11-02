@@ -134,7 +134,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 				type: "genDiff"
 				data: outputData
 
-			$scope.activeGroup.generatedDifferences.push shot
+			$scope.activeGroup.differences.push shot
 
 	$scope.$watch "diffModal.open", (val) ->
 		if not val

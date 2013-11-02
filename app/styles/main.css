@@ -27,6 +27,7 @@ body {
 
 .group-container {
 	margin-top: 70px;
+	margin-bottom: 70px;
 }
 .error {
 	color: red;
@@ -198,4 +199,10 @@ input[type="range"] {
 }
 .alerts.dock-left {
 	left: 10px !important;
+}
+
+.shot-list .fa {
+	position: relative;
+	top: -4px;
+	cursor: pointer;
 }

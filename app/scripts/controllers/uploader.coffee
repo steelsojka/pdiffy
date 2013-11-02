@@ -35,7 +35,7 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 		shot.screen.path =  data
 
 		$scope.activeGroup.shots.push shot
-		$scope.activeGroup.currentTab = shot.id
+		$scope.activeGroup.setCurrentShot shot.id
 	
 	$scope.upload = -> forEach $scope.uploadedFiles, uploadImage
 

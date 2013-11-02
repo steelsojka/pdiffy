@@ -2,8 +2,7 @@ angular.module("pdifferenceApp").controller "tabControlsCtrl", ($scope, $injecto
 	
 	$rootScope = $injector.get "$rootScope"
 
-	$scope.onOpacityChange = (id, val) -> $scope.shot.screenOpacity = val
-	$scope.onDiffOpacityChange = (id, val) -> $scope.shot.differenceOpacity = val
+	$scope.onOpacityChange = (id, val) -> $scope.activeGroup.currentShot.screenOpacity = val
 
 	$scope.resetPosition = (obj) -> 
 		obj.x = 0

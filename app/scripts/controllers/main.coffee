@@ -23,6 +23,12 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 		showError: false
 		error: ""
 
+	$scope.zoom =
+		level: 1
+		increase: -> @level += 0.1
+		decrease: -> @level -= 0.1
+		reset: -> @level = 1
+
 	$scope.alerts = []
 
 	$scope.getAlertById = (id) ->
@@ -48,7 +54,7 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 
 	$scope.onScrollTop = -> $window.scrollTo 0,0
 
-	$scope.onScrollBottom = -> $window.scrollTo 0, $document.body.scrollHeight
+	$scope.onScrollBottom = -> $window.scrollTo 0, $document[0].body.scrollHeight
 	
 	$scope.$on "groupTabChange", (e, shotURL) -> $scope.tabURL = shotURL
 

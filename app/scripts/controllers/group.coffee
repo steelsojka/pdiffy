@@ -7,12 +7,12 @@ angular.module("pdifferenceApp").controller "groupCtrl", ($scope) ->
 		$scope.$broadcast "centerElements"
 		$scope.$emit "groupTabChange", shot.displayURL
 	
-	$scope.removeShot = (shot) -> $scope.activeGroup.removeShot shot 
+	$scope.removeShot = (shot) -> $scope.activeGroup.removeShot shot
 
-	$scope.removeGeneratedDifference = -> 
+	$scope.removeGeneratedDifference = ->
 		$scope.activeGroup.removeDifference @shot
 
-		if $scope.activeGroup.generatedDifferences.length < 1
+		if $scope.activeGroup.differences.length < 1
 			$scope.setCurrentTab $scope.activeGroup.shots[0]
 
 	return

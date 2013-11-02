@@ -12,6 +12,7 @@ angular.module("pdifferenceApp").directive "imageCanvas", ($parse) ->
 					scope.shot.canvasContext = ctx
 					scope.removeAlert alertId
 					(scope.centerElement or angular.noop)()
+					(scope.applyZoom or angular.noop)()
 
 			alertId = scope.addAlert
 				msg: "Loading image..."
