@@ -84,13 +84,11 @@ body {
 .controls.dock-left {
 	left: 0px;
 	border-right: 1px solid rgba(0,0,0,0.4);
-	border-top-right-radius: 10px;
 	border-bottom-right-radius: 10px;
 }
 .controls.dock-right {
 	right: 0px;
 	border-left: 1px solid rgba(0,0,0,0.4);
-	border-top-left-radius: 10px;
 	border-bottom-left-radius: 10px;
 	/*box-shadow: -3px 0px 15px rgba(0,0,0,0.3);*/
 }
@@ -115,10 +113,10 @@ body {
 
 .controls .expand-tab {
 	position: absolute;
-	font-size: 19px;
+	font-size: 15px;
 	line-height: 0px;
-	padding: 33px 2px;
-	top: 50%;
+	padding: 15px 3px;
+	top: -1px;
 	border-top: 1px solid rgba(0,0,0,0.4);
 	border-bottom: 1px solid rgba(0,0,0,0.4);
 	background-color: #FFF;
@@ -138,18 +136,16 @@ body {
 	color: rgb(220,220,220) !important;
 }
 .controls.dock-left .expand-tab {
-	right: -19px;
+	right: -17px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	border-right: 1px solid rgba(0,0,0,0.4);
-	box-shadow: 5px 0px 15px rgba(0,0,0,0.3);
 }
 .controls.dock-right .expand-tab {
-	left: -19px;
+	left: -17px;
 	border-top-left-radius: 5px;
 	border-bottom-left-radius: 5px;
 	border-left: 1px solid rgba(0,0,0,0.4);
-	box-shadow: -5px 0px 15px rgba(0,0,0,0.3);
 }
 
 .controls .selected {
