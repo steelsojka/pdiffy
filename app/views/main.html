@@ -1,17 +1,7 @@
 <div ng-include="'views/navigation.html'"></div>
-<!--- <div>
-	<ul class="breadcrumb">
-		<li>
-			<a>{{activeGroup.source.displayURL}}</a>
-			<span class="divider"><i class="icon-exchange"></i></span>
-		</li>
-		<li>
-			<a>{{tabURL}}</a>
-		</li>
-	</ul>
-</div> --->
 
-<div ng-controller="groupCtrl" viewport class="group-container">
+<div ng-controller="groupCtrl" ng-style="{height: activeGroup.viewport.height, width: activeGroup.viewport.width}"
+	   class="group-container">
 	<div class="controls" 
 			 ng-class="{'dock-left': dock.position == 'left', 
 									'dock-right': dock.position == 'right',
@@ -64,12 +54,13 @@
 			<button class="btn" ng-click="onScrollBottom()">
 				<span class="fa fa-long-arrow-down"></span>
 			</button>
-			<button class="btn" ng-click="$broadcast('centerElements')">
-				<span class="fa fa-align-center"></span>
-			</button>
 			<button class="btn" type="button" ng-model="dock.pinned" btn-checkbox>
 				<span class="fa fa-thumb-tack"></span>
 			</button>
+		</div>
+		<div class="zoom-indicator input-prepend">
+			<span class="add-on fa fa-search-plus"></span>
+			<input class="input-mini" readonly type="text" ng-value="activeGroup.viewport.zoom.level | percent">
 		</div>
 		<div class="expand-tab" ng-click="dock.hidden = !dock.hidden">
 			<span class="fa" ng-class="{'fa-chevron-left': (dock.position == 'right' && dock.hidden)
@@ -80,9 +71,9 @@
 	</div>
 	
 	<div ng-repeat="shot in activeGroup.shots" 
-		ng-style="{left: viewport.left + (shot.screenPosition.x * zoom.level), 
-		           top: viewport.top + 41 + (shot.screenPosition.y * zoom.level)}" class="shot-container" 
-			 zoom="zoom.level"
+		ng-style="{left: activeGroup.viewport.left + (shot.screenPosition.x * activeGroup.viewport.zoom.level), 
+		           top: activeGroup.viewport.top + 41 + (shot.screenPosition.y * activeGroup.viewport.zoom.level)}" class="shot-container" 
+			 zoom="activeGroup.viewport.zoom.level"
 			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 
 				 animate-time="shot.screenAnimateTime" 
@@ -91,8 +82,9 @@
 	</div>
 	<div ng-repeat="shot in activeGroup.differences"
 			 class="shot-container"
-			 ng-style="{left: viewport.left, top: viewport.top + 41}"
-			 zoom="zoom.level"
+			 ng-style="{left: activeGroup.viewport.left + (shot.screenPosition.x * activeGroup.viewport.zoom.level), 
+		              top: activeGroup.viewport.top + 41 + (shot.screenPosition.y * activeGroup.viewport.zoom.level)}"
+			 zoom="activeGroup.viewport.zoom.level"
 			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas class="screen-shot" buffer-canvas buffers="shot.buffers" 
 						pixel-width="shot.width" pixel-height="shot.height" 

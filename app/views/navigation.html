@@ -52,7 +52,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a ng-click="zoom.increase()" >
+						<a ng-click="activeGroup.viewport.zoom.increase()" >
 							<table>
 								<tr>
 									<td><span class="fa fa-search-plus"></span> Zoom In</td>
@@ -62,7 +62,7 @@
 						</a>
 					</li>
 					<li>
-						<a ng-click="zoom.decrease()">
+						<a ng-click="activeGroup.viewport.zoom.decrease()">
 							<table>
 								<tr>
 									<td><span class="fa fa-search-minus"></span> Zoom Out</td>
@@ -72,7 +72,7 @@
 						</a>
 					</li>
 					<li>
-						<a ng-click="zoom.reset()"><span class="fa fa-refresh"></span> Zoom Reset</a>
+						<a ng-click="activeGroup.viewport.zoom.reset()"><span class="fa fa-refresh"></span> Zoom Reset</a>
 					</li>
 					<li class="divider"></li>
 					<li class="dropdown-submenu">

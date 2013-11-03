@@ -31,12 +31,6 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 		showError: false
 		error: ""
 
-	$scope.zoom =
-		level: 1
-		increase: (amount=0.1) -> @level += amount
-		decrease: (amount=0.1) -> @level -= amount
-		reset: -> @level = 1
-
 	$scope.alerts = []
 
 	$scope.getAlertById = (id) ->
@@ -71,10 +65,10 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 
 	# Heres where we set all our global keyboard shortcuts
 	keyBindings =
-		"ctrl+=": -> $scope.zoom.increase()
-		"ctrl+-": -> $scope.zoom.decrease()
-		"ctrl+alt+=": -> $scope.zoom.increase(0.02)
-		"ctrl+alt+-": -> $scope.zoom.decrease(0.02)
+		"ctrl+=": -> $scope.activeGroup.viewport.zoom.increase()
+		"ctrl+-": -> $scope.activeGroup.viewport.zoom.decrease()
+		"ctrl+alt+=": -> $scope.activeGroup.viewport.zoom.increase(0.02)
+		"ctrl+alt+-": -> $scope.activeGroup.viewport.zoom.decrease(0.02)
 		"ctrl+shift+d": -> $scope.dock.hidden = not $scope.dock.hidden
 		"ctrl+h": -> $scope.activeGroup.currentShot.show = not $scope.activeGroup.currentShot.show
 		"ctrl+backspace": -> $scope.activeGroup.removeShot $scope.activeGroup.currentShot

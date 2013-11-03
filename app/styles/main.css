@@ -228,3 +228,7 @@ td.shortcut {
 	margin-right: 0 !important;
 	width: 100%;
 }
+
+.zoom-indicator {
+	padding: 5px 15px;
+}
