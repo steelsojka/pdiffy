@@ -61,7 +61,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 				width = shot.canvasContext.canvas.width
 				height = shot.canvasContext.canvas.height
 				startY = blockSize * i
-				startX = Math.round (width - maxWidth) / 2
+				startX = 0
 				captureStartX = startX - shot.screenPosition.x
 				captureStartY = startY - shot.screenPosition.y
 				captureWidth = Math.round width - (width - maxWidth)

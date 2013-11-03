@@ -24,17 +24,15 @@
 					 ng-repeat="shot in activeGroup.shots"
 					 ng-class="{active: activeGroup.currentTab == shot.id}">
 					 <a>
-						<span class="fa" ng-click="shot.show = !shot.show" 
-							 ng-class="{'fa-eye': shot.show, 'fa-eye-slash': !shot.show}"></span>
-						<!--<span class="fa" ng-click="shot.showDifference = !shot.showDifference" 
-							 ng-class="{'fa-check': shot.showDifference, 
-													'fa-check-empty': !shot.showDifference,
-													'fa-check-minus': shot.type == 'source' || shot.type == 'upload'}"></span>-->
-						<div class="url-display">{{shot.displayURL}}</div>
-						<span class="fa fa-trash-o" ng-click="removeShot(shot)"></span>
-						<span class="fa font-red fa-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></span>
+							<span class="fa" ng-click="shot.show = !shot.show" 
+								 ng-class="{'fa-eye': shot.show, 'fa-eye-slash': !shot.show}"></span>
+							<div class="url-display">{{shot.displayURL}}</div>
+							<span class="fa fa-trash-o" ng-click="removeShot(shot)"></span>
+							<span class="fa font-red fa-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></span>
 					 </a>
-			</li>
+			 </li>
+		 </ul>
+		<ul class="nav nav-list shot-list">
 			<li class="nav-header">Differences ({{activeGroup.differences.length}})</li>
 			<li ng-click="setCurrentTab(shot)" 
 					ng-repeat="shot in activeGroup.differences"
@@ -43,8 +41,8 @@
 					<span class="fa" ng-click="shot.show = !shot.show" 
 						 ng-class="{'fa-eye': shot.show, 'fa-eye-slash': !shot.show}"></span>
 					<div class="url-display">Difference {{$index + 1}}</div>
+					<span class="fa fa-trash-o" ng-click="removeGeneratedDifference()"></span>
 					<span class="fa font-red fa-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></span>
-					<span class="fa pull-right fa-trash-o" ng-click="removeGeneratedDifference()"></span>
 				</a>
 			</li>
 		</ul>
@@ -52,11 +50,6 @@
 			<div ng-controller="tabControlsCtrl" 
 					ng-include src="'controls.html'">
 			</div>
-			<!--<div ng-controller="tabControlsCtrl" 
-					 ng-repeat="shot in activeGroup.differences"
-					 ng-include src="'controls.html'" 
-					 ng-show="activeGroup.currentTab == shot.id">
-				 </div> --->
 		</div>
 		<div class="btn-group position-controls">
 			<button class="btn" type="button" ng-click="dock.position = 'left'">
@@ -86,18 +79,19 @@
 		</div>
 	</div>
 	
-	<div ng-repeat="shot in activeGroup.shots" center class="shot-container" 
+	<div ng-repeat="shot in activeGroup.shots" 
+		ng-style="{left: viewport.left + (shot.screenPosition.x * zoom.level), 
+		           top: viewport.top + 41 + (shot.screenPosition.y * zoom.level)}" class="shot-container" 
 			 zoom="zoom.level"
 			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 
 				 animate-time="shot.screenAnimateTime" 
 				 src="shot.screen.path"
-				 ng-style="{opacity: shot.screenOpacity, 
-										top: shot.screenPosition.y + 'px', 
-										left: shot.screenPosition.x + 'px'}"></canvas>
+				 ng-style="{opacity: shot.screenOpacity}"></canvas>
 	</div>
 	<div ng-repeat="shot in activeGroup.differences"
-			 class="shot-container" center
+			 class="shot-container"
+			 ng-style="{left: viewport.left, top: viewport.top + 41}"
 			 zoom="zoom.level"
 			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas class="screen-shot" buffer-canvas buffers="shot.buffers" 

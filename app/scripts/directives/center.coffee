@@ -5,11 +5,9 @@ angular.module("pdifferenceApp").directive "center", ($injector) ->
 
 	(scope, element, attrs) ->
 		adjust = ->
-			width = scope.shot.width * scope.zoom.level / 2
-			height = scope.shot.height * scope.zoom.level / 2
 			element.css
-				left: "#{width}px"
-				top: "#{height + 41}px" # account for the navbar
+				left: "#{scope.viewport.left}px"
+				top: "#{scope.viewport.top + 41}px" # account for the navbar
 
 		scope.centerElement = -> $timeout adjust, 0
 
