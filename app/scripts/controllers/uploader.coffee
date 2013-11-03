@@ -3,14 +3,6 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 	forEach = angular.forEach
 
 	$scope.uploadedFiles = []
-	$scope.open = false
-	$scope.options =
-		backdropFade: true
-		dialogFade: true
-		keyboard: true
-
-	$scope.showError = false
-	$scope.error = ""
 
 	$scope.onFileSelect = (files) ->
 		$scope.uploadedFiles.push file for file in files
@@ -26,7 +18,7 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 			addScreenShot e.target.result, file
 			$scope.$apply()
 
-		$scope.open = false
+		$scope.uploader.open = false
 		reader.readAsDataURL file
 
 	addScreenShot = (data, file) ->
@@ -39,9 +31,7 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 	
 	$scope.upload = -> forEach $scope.uploadedFiles, uploadImage
 
-	$scope.$on "openUploadModal", ->
-		$scope.open = true
-		$scope.uploadedFiles = []
+	$scope.$watch "uploader.open", (value) -> $scope.uploadedFiles = [] if value is true
 
 	return
 

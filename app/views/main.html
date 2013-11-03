@@ -7,7 +7,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a ng-click="broadcast('openUploadModal')">
+						<a ng-click="uploader.open = true">
 							<span class="fa fa-upload"></span> Upload Images...
 						</a>
 					</li>
@@ -92,7 +92,7 @@
 						<span class="fa font-red fa-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></span>
 					 </a>
 			</li>
-			<li class="nav-header">Generated Differences ({{activeGroup.differences.length}})</li>
+			<li class="nav-header">Differences ({{activeGroup.differences.length}})</li>
 			<li ng-click="setCurrentTab(shot)" 
 					ng-repeat="shot in activeGroup.differences"
 					ng-class="{active: activeGroup.currentTab == shot.id}">
@@ -215,8 +215,8 @@
 
 <!-- File Upload modal -->
 
-<div modal="open" ng-controller="uploaderCtrl"
-		 close="open = false" options="options">
+<div modal="uploader.open" ng-controller="uploaderCtrl"
+		 close="uploader.open = false" options="uploader.options">
 	<div class="modal-header">
 		<h4>Upload Images</h4>
 	</div>
@@ -233,7 +233,7 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<a class="btn" ng-click="open = false">Cancel</a>
+		<a class="btn" ng-click="uploader.open = false">Cancel</a>
 		<a class="btn btn-primary" ng-click="upload()">Upload</a>
 	</div>
 </div>
@@ -273,7 +273,7 @@
 		</div>
 		
 		<div class="control-section position" ng-class="{disabled: !activeGroup.currentShot.show}">
-			<label>Screen Position</label>
+			<label>Position</label>
 			<div class="mini-input input-prepend">
 				<span class="add-on">x</span>
 				<input class="input-mini" ng-disabled="!activeGroup.currentShot.show" type="number" ng-model="activeGroup.currentShot.screenPosition.x">
@@ -283,46 +283,10 @@
 				<input class="input-mini"  ng-disabled="!activeGroup.currentShot.show" type="number" ng-model="activeGroup.currentShot.screenPosition.y">
 			</div>
 			<button class="btn btn-mini" ng-click="resetPosition(activeGroup.currentShot.screenPosition)">
-				<span class="fa-refresh"></span>
+				<span class="fa fa-refresh"></span>
 			</button>
 		</div>
 
-<!--		<div class="control-section" ng-class="{disabled: !shot.showDifference || !shot.show}" 
-				 ng-show="shot.type != 'source' && shot.type != 'upload'">
-			<label>Difference Opacity</label>
-			<input slider="onDiffOpacityChange(shot.id, $value)" 
-						 ng-disabled="!shot.showDifference || !shot.show || shot.differenceAnimate" 
-						 type="range" min="0" max="1" step="0.01" value="1"/>
-				<div class="btn-group">
-					<button class="btn btn-mini" ng-click="shot.differenceAnimate = false" ng-disabled="!shot.showDifference || !shot.show">
-						<i class="icon-stop"></i>
-					</button>
-					<button class="btn btn-mini" ng-model="shot.differenceAnimate" btn-checkbox ng-disabled="!shot.showDifference || !shot.show">
-						<i class="icon-play"></i>
-					</button>
-				</div>
-				<div class="time-input mini-input input-prepend input-append">
-					<span class="add-on">Time:</span>
-					<input class="input-mini" ng-disabled="!shot.showDifference || !shot.show" ng-model="shot.differenceAnimateTime" type="number">
-					<span class="add-on">s</span>
-				</div>
-		</div>
-
-		<div class="control-section position" ng-class="{disabled: !shot.showDifference || !shot.show}" 
-				 ng-show="shot.type != 'source' && shot.type != 'upload'">
-			<label>Difference Position</label>
-			<div class="mini-input input-prepend">
-				<span class="add-on">x</span>
-				<input class="input-mini" ng-disabled="!shot.showDifference || !shot.show" type="number" ng-model="shot.differencePosition.x">
-			</div>
-			<div class="mini-input input-prepend">
-				<span class="add-on">y</span>
-				<input class="input-mini" ng-disabled="!shot.showDifference || !shot.show" type="number" ng-model="shot.differencePosition.y">
-			</div>
-			<button class="btn btn-mini" ng-click="resetPosition(shot.differencePosition)">
-				<i class="icon-refresh"></i>
-			</button>
-		</div>-->
 		<div class="control-section" ng-show="shot.type != 'source' && shot.type != 'upload'">
 			<label>Info</label>
 			<table class="table table-condensed">

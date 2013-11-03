@@ -10,7 +10,8 @@
     "angular-resource": "~1.0.7",
 		"angular-ui-bootstrap-bower": "~0.4.x",
 		"lodash": "~2.2.1",
-		"font-awesome": ""
+		"font-awesome": "~4.0.0",
+		"mousetrap": ""
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

@@ -8,29 +8,50 @@ angular.module("pdifferenceApp").factory "Group", ->
 			@currentTab = null
 			@currentShot = null
 			@name = "Group #{@id}"
-		addShot: (shot) -> 
-			@shots.push shot
-			@sortShots()
+		addShot: (shot) -> @shots.push shot
 		setName: (name) -> @name = name
 		removeShot: (shot) ->
-			_.pull @shots, shot
-			@sortShots()
+			array = null
+			if _.contains @shots, shot
+				array = @shots
+			else if _.contains @differences, shot
+				array = @differences
+
+			return if array is null
+
+			index = array.indexOf shot
+			isLast = index is array.length - 1
+
+			_.pull array, shot
+
+			if array.length > 0
+				nextShot = if isLast then array[index - 1] else array[index]
+				@setCurrentShot nextShot.id
+			else
+				otherArray = if array is @shots then @differences else @shots
+				if otherArray.length > 0
+					@setCurrentShot otherArray[otherArray.length - 1].id
 		addDifference: (diff) -> @differences.push diff
 		removeDifference: (shot) -> _.pull @differences, shot
 		findSource: ->
 			@source = _.find group.shots, (shot) ->
 				shot.type is "source"
-		sortShots: ->
-			@shots.sort (a, b) ->
-				if a.type is "source"
-					return -1
-				else
-					return 1
 		getShotById: (id) -> _.find @shots, (shot) -> shot.id is id
 		getDifferenceById: (id) -> _.find @differences, (shot) -> shot.id is id
 		setCurrentShot: (id) ->
 			@currentTab = id
 			@currentShot = @getShotById(id) or @getDifferenceById(id) or null
+		moveToShot: (index) ->
+			return if @currentShot is null
+			shotArray = @getActiveSet()
+			@setCurrentShot shotArray[index].id if shotArray.length > index >= 0
+		getActiveSet: ->
+			return if @currentShot is null
+			if @currentShot.type is "difference" then @differences else @shots
+		getActiveSetIndex: ->
+			set = @getActiveSet()
+			return if not angular.isArray set
+			set.indexOf @currentShot
 
 
 	return Group

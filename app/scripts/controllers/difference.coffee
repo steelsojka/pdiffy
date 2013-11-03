@@ -131,7 +131,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 				width: width
 				height: height
 				showDifference: true
-				type: "genDiff"
+				type: "difference"
 				data: outputData
 
 			$scope.activeGroup.differences.push shot
