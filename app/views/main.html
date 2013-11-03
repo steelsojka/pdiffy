@@ -1,111 +1,4 @@
-<div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<ul class="nav">
-			<li class="dropdown">
-				<a class="dropdown-toggle">
-					File
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a ng-click="uploader.open = true">
-							<table>
-								<tr>
-									<td><span class="fa fa-upload"></span> Upload Images...</td>
-									<td class="shortcut">Ctrl+u</td>
-								</tr>
-							</table>
-						</a>
-					</li>
-					<li>
-						<a ng-click="diffModal.open = true">
-							<table>
-								<tr>
-									<td><span class="fa fa-adjust"></span> Perform Difference...</td>
-									<td class="shortcut">Ctrl+d</td>
-								</tr>
-							</table>
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="dropdown">
-				<a class="dropdown-toggle">
-					Groups
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a><span class="fa fa-group"></span> New Group</a>
-					</li>
-					<li class="divider"></li>
-					<li class="nav-header">Created Groups</li>
-					<li ng-repeat="group in groups">
-						<a ng-click="onPageChange(this)">
-							<span class="fa fa-check" ng-show="group == activeGroup"></span>
-							{{group.name}}
-						</a>
-					</li>
-				</ul>
-			</li>
-			<li class="dropdown">
-				<a class="dropdown-toggle">
-					View
-				</a>
-				<ul class="dropdown-menu">
-					<li>
-						<a ng-click="zoom.increase()" >
-							<table>
-								<tr>
-									<td><span class="fa fa-search-plus"></span> Zoom In</td>
-									<td class="shortcut">Ctrl+=</td>
-								</tr>
-							</table>
-						</a>
-					</li>
-					<li>
-						<a ng-click="zoom.decrease()">
-							<table>
-								<tr>
-									<td><span class="fa fa-search-minus"></span> Zoom Out</td>
-									<td class="shortcut">Ctrl+-</td>
-								</tr>
-							</table>
-						</a>
-					</li>
-					<li>
-						<a ng-click="zoom.reset()"><span class="fa fa-refresh"></span> Zoom Reset</a>
-					</li>
-					<li class="divider"></li>
-					<li class="dropdown-submenu">
-						<a>Controls</a>
-						<ul class="dropdown-menu">
-							<li>
-								<a ng-click="dock.hidden = !dock.hidden">
-									<table>
-										<tr>
-											<td><span ng-show="dock.hidden" class="fa fa-check"></span> Hide</td>
-											<td class="shortcut">Ctrl+Shift+d</td>
-										</tr>
-									</table>
-								</a>
-							</li>
-							<li>
-								<a ng-click="dock.pinned = !dock.pinned">
-									<table>
-										<tr>
-											<td><span ng-show="dock.pinned" class="fa fa-check"></span> Pin</td>
-											<td class="shortcut">Ctrl+Shift+p</td>
-										</tr>
-									</table>
-								</a>
-							</li>
-						</ul>
-					</li>
-				</ul>
-			</li>
-		</ul>
-	</div>
-</div>
-
+<div ng-include="'views/navigation.html'"></div>
 <!--- <div>
 	<ul class="breadcrumb">
 		<li>
@@ -118,7 +11,7 @@
 	</ul>
 </div> --->
 
-<div ng-controller="groupCtrl" class="group-container">
+<div ng-controller="groupCtrl" viewport class="group-container">
 	<div class="controls" 
 			 ng-class="{'dock-left': dock.position == 'left', 
 									'dock-right': dock.position == 'right',
@@ -202,13 +95,6 @@
 				 ng-style="{opacity: shot.screenOpacity, 
 										top: shot.screenPosition.y + 'px', 
 										left: shot.screenPosition.x + 'px'}"></canvas>
-		<!--<div class="difference-shot" ng-hide="shot.type == 'upload'" ng-style="{opacity: shot.differenceOpacity}">
-			<img class="screen-shot" animate-opacity="shot.differenceAnimate" 
-				 animate-time="shot.differenceAnimateTime"
-				 ng-src="{{shot.diff.path}}" ng-show="shot.showDifference"
-				 ng-style="{top: shot.differencePosition.y + 'px', 
-										left: shot.differencePosition.x + 'px'}">
-									</div>-->
 	</div>
 	<div ng-repeat="shot in activeGroup.differences"
 			 class="shot-container" center

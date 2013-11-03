@@ -5,9 +5,11 @@ angular.module("pdifferenceApp").directive "center", ($injector) ->
 
 	(scope, element, attrs) ->
 		adjust = ->
+			width = scope.shot.width * scope.zoom.level / 2
+			height = scope.shot.height * scope.zoom.level / 2
 			element.css
-				"left": "50%"
-				"margin-left": -(element[0].clientWidth / 2) + "px"
+				left: "#{width}px"
+				top: "#{height + 41}px" # account for the navbar
 
 		scope.centerElement = -> $timeout adjust, 0
 
@@ -15,6 +17,8 @@ angular.module("pdifferenceApp").directive "center", ($injector) ->
 
 		angular.element($window).bind "resize", _.throttle(adjust, 50)
 
-		adjust()
+		scope.$watch "zoom.level", adjust
+		scope.$watch "activeGroup.shots.length", adjust
+		scope.$watch "activeGroup.differences.length", adjust
 
 		return

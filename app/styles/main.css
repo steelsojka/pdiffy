@@ -26,8 +26,7 @@ body {
 }
 
 .group-container {
-	margin-top: 70px;
-	margin-bottom: 70px;
+	margin-top: 41px;
 }
 .error {
 	color: red;
@@ -222,4 +221,10 @@ td.shortcut {
 
 .clear-both {
 	clear: both;
+}
+
+.container {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+	width: 100%;
 }
