@@ -206,3 +206,20 @@ input[type="range"] {
 	top: -4px;
 	cursor: pointer;
 }
+
+.shortcut {
+	color: #999999;
+	font-size: 12px;
+}
+
+td.shortcut {
+	text-align: right;
+}
+
+.navbar table {
+	width: 100%;
+}
+
+.clear-both {
+	clear: both;
+}

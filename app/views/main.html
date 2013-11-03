@@ -8,12 +8,22 @@
 				<ul class="dropdown-menu">
 					<li>
 						<a ng-click="uploader.open = true">
-							<span class="fa fa-upload"></span> Upload Images...
+							<table>
+								<tr>
+									<td><span class="fa fa-upload"></span> Upload Images...</td>
+									<td class="shortcut">Ctrl+u</td>
+								</tr>
+							</table>
 						</a>
 					</li>
 					<li>
 						<a ng-click="diffModal.open = true">
-							<span class="fa fa-adjust"></span> Perform Difference...
+							<table>
+								<tr>
+									<td><span class="fa fa-adjust"></span> Perform Difference...</td>
+									<td class="shortcut">Ctrl+d</td>
+								</tr>
+							</table>
 						</a>
 					</li>
 				</ul>
@@ -42,13 +52,53 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a ng-click="zoom.increase()" ><span class="fa fa-search-plus"></span> Zoom In</a>
+						<a ng-click="zoom.increase()" >
+							<table>
+								<tr>
+									<td><span class="fa fa-search-plus"></span> Zoom In</td>
+									<td class="shortcut">Ctrl+=</td>
+								</tr>
+							</table>
+						</a>
 					</li>
 					<li>
-						<a ng-click="zoom.decrease()"><span class="fa fa-search-minus"></span> Zoom Out</a>
+						<a ng-click="zoom.decrease()">
+							<table>
+								<tr>
+									<td><span class="fa fa-search-minus"></span> Zoom Out</td>
+									<td class="shortcut">Ctrl+-</td>
+								</tr>
+							</table>
+						</a>
 					</li>
 					<li>
 						<a ng-click="zoom.reset()"><span class="fa fa-refresh"></span> Zoom Reset</a>
+					</li>
+					<li class="divider"></li>
+					<li class="dropdown-submenu">
+						<a>Controls</a>
+						<ul class="dropdown-menu">
+							<li>
+								<a ng-click="dock.hidden = !dock.hidden">
+									<table>
+										<tr>
+											<td><span ng-show="dock.hidden" class="fa fa-check"></span> Hide</td>
+											<td class="shortcut">Ctrl+Shift+d</td>
+										</tr>
+									</table>
+								</a>
+							</li>
+							<li>
+								<a ng-click="dock.pinned = !dock.pinned">
+									<table>
+										<tr>
+											<td><span ng-show="dock.pinned" class="fa fa-check"></span> Pin</td>
+											<td class="shortcut">Ctrl+Shift+p</td>
+										</tr>
+									</table>
+								</a>
+							</li>
+						</ul>
 					</li>
 				</ul>
 			</li>

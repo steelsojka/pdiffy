@@ -80,6 +80,7 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 		"ctrl+backspace": -> $scope.activeGroup.removeShot $scope.activeGroup.currentShot
 		"ctrl+u": -> $scope.uploader.open = true
 		"ctrl+d": -> $scope.diffModal.open = true
+		"ctrl+shift+p": -> $scope.dock.pinned = not $scope.dock.pinned
 
 	for own key, fn of keyBindings
 		keyBindings[key] = _.wrap fn, (func, e) ->
