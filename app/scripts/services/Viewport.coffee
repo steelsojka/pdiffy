@@ -16,7 +16,7 @@ angular.module("pdifferenceApp").factory "Viewport", ($injector) ->
 			@viewport.adjust()
 
 	class Viewport
-		constructor: (@group) ->
+		constructor: (@session) ->
 			@left = 0
 			@top = 0
 			@width = 0
@@ -29,7 +29,7 @@ angular.module("pdifferenceApp").factory "Viewport", ($injector) ->
 			y = @top + ((@canvasHeight * @zoom.level) - $window.innerHeight) / 2
 			$window.scrollTo x, y
 		adjust: ->
-			shots = @group.shots.concat @group.differences
+			shots = @session.shots.concat @session.differences
 			maxHeight = if shots.length is 0 then 0 else _(shots).pluck("height").max().value()
 			maxWidth = if shots.length is 0 then 0 else _(shots).pluck("width").max().value()
 			@canvasWidth = maxWidth

@@ -1,7 +1,7 @@
 angular.module("pdifferenceApp").directive "zoom", ->
 	restrict: "A"
 	link: (scope, element, attrs) ->
-		scope.applyZoom = (value=scope.activeGroup.viewport.zoom.level)->
+		scope.applyZoom = (value=scope.activeSession.viewport.zoom.level)->
 			element.css
 				"-webkit-transform": "scale(#{value})"
 				"-webkit-transform-origin": "0 0"

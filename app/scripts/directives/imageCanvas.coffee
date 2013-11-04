@@ -14,7 +14,7 @@ angular.module("pdifferenceApp").directive "imageCanvas", ($parse) ->
 					scope.shot.height = img.height
 					scope.removeAlert alertId
 					(scope.applyZoom or angular.noop)()
-					scope.activeGroup.viewport.adjust()
+					scope.activeSession.viewport.adjust()
 
 			alertId = scope.addAlert
 				msg: "Loading image..."

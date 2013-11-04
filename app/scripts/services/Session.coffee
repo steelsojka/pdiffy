@@ -1,8 +1,8 @@
-angular.module("pdifferenceApp").factory "Group", ($injector) ->
+angular.module("pdifferenceApp").factory "Session", ($injector) ->
 
 	Viewport = $injector.get "Viewport"
 
-	class Group
+	class Session
 		constructor: ->
 			@shots = []
 			@source = null
@@ -10,7 +10,7 @@ angular.module("pdifferenceApp").factory "Group", ($injector) ->
 			@id = _.uniqueId()
 			@currentTab = null
 			@currentShot = null
-			@name = "Group #{@id}"
+			@name = "Session #{@id}"
 			@viewport = new Viewport this
 		addShot: (shot) -> @shots.push shot
 		setName: (name) -> @name = name
@@ -58,4 +58,4 @@ angular.module("pdifferenceApp").factory "Group", ($injector) ->
 			set.indexOf @currentShot
 
 
-	return Group
+	return Session

@@ -1,6 +1,6 @@
 <div ng-include="'views/navigation.html'"></div>
 
-<div ng-controller="groupCtrl" ng-style="{height: activeGroup.viewport.height, width: activeGroup.viewport.width}"
+<div ng-controller="sessionCtrl" ng-style="{height: activeSession.viewport.height, width: activeSession.viewport.width}"
 	   class="group-container">
 	<div class="controls" 
 			 ng-class="{'dock-left': dock.position == 'left', 
@@ -9,10 +9,10 @@
 									'hidden-left': dock.hidden && dock.position == 'left',
 									'hidden-right': dock.hidden && dock.position == 'right'}">
 		<ul class="nav nav-list shot-list">
-			<li class="nav-header">Screen Shots ({{activeGroup.shots.length}})</li>
+			<li class="nav-header">Screen Shots ({{activeSession.shots.length}})</li>
 			<li ng-click="setCurrentTab(shot)" 
-					 ng-repeat="shot in activeGroup.shots"
-					 ng-class="{active: activeGroup.currentTab == shot.id}">
+					 ng-repeat="shot in activeSession.shots"
+					 ng-class="{active: activeSession.currentTab == shot.id}">
 					 <a>
 							<span class="fa" ng-click="shot.show = !shot.show" 
 								 ng-class="{'fa-eye': shot.show, 'fa-eye-slash': !shot.show}"></span>
@@ -23,10 +23,10 @@
 			 </li>
 		 </ul>
 		<ul class="nav nav-list shot-list">
-			<li class="nav-header">Differences ({{activeGroup.differences.length}})</li>
+			<li class="nav-header">Differences ({{activeSession.differences.length}})</li>
 			<li ng-click="setCurrentTab(shot)" 
-					ng-repeat="shot in activeGroup.differences"
-					ng-class="{active: activeGroup.currentTab == shot.id}">
+					ng-repeat="shot in activeSession.differences"
+					ng-class="{active: activeSession.currentTab == shot.id}">
 				<a>
 					<span class="fa" ng-click="shot.show = !shot.show" 
 						 ng-class="{'fa-eye': shot.show, 'fa-eye-slash': !shot.show}"></span>
@@ -54,7 +54,7 @@
 			<button class="btn btn-default" ng-click="onScrollBottom()">
 				<span class="fa fa-long-arrow-down"></span>
 			</button>
-			<button class="btn btn-default" ng-click="activeGroup.viewport.center()">
+			<button class="btn btn-default" ng-click="activeSession.viewport.center()">
 				<span class="fa fa-align-center"></span>
 			</button>
 			<button class="btn btn-default" type="button" ng-model="dock.pinned" btn-checkbox>
@@ -63,7 +63,7 @@
 		</div>
 		<div class="zoom-indicator input-prepend">
 			<span class="add-on fa fa-search"></span>
-			<input class="input-mini" readonly type="text" ng-value="activeGroup.viewport.zoom.level | percent">
+			<input class="input-mini" readonly type="text" ng-value="activeSession.viewport.zoom.level | percent">
 		</div>
 		<div class="expand-tab" ng-click="dock.hidden = !dock.hidden">
 			<span class="fa" ng-class="{'fa-chevron-left': (dock.position == 'right' && dock.hidden)
@@ -73,22 +73,22 @@
 		</div>
 	</div>
 	
-	<div ng-repeat="shot in activeGroup.shots" 
-		ng-style="{left: activeGroup.viewport.left + (shot.screenPosition.x * activeGroup.viewport.zoom.level), 
-		           top: activeGroup.viewport.top + 41 + (shot.screenPosition.y * activeGroup.viewport.zoom.level)}" class="shot-container" 
-			 zoom="activeGroup.viewport.zoom.level"
-			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
+	<div ng-repeat="shot in activeSession.shots" 
+		ng-style="{left: activeSession.viewport.left + (shot.screenPosition.x * activeSession.viewport.zoom.level), 
+		           top: activeSession.viewport.top + 41 + (shot.screenPosition.y * activeSession.viewport.zoom.level)}" class="shot-container" 
+			 zoom="activeSession.viewport.zoom.level"
+			 ng-class="{'active-tab': activeSession.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 
 				 animate-time="shot.screenAnimateTime" 
 				 src="shot.screen.path"
 				 ng-style="{opacity: shot.screenOpacity}"></canvas>
 	</div>
-	<div ng-repeat="shot in activeGroup.differences"
+	<div ng-repeat="shot in activeSession.differences"
 			 class="shot-container"
-			 ng-style="{left: activeGroup.viewport.left + (shot.screenPosition.x * activeGroup.viewport.zoom.level), 
-		              top: activeGroup.viewport.top + 41 + (shot.screenPosition.y * activeGroup.viewport.zoom.level)}"
-			 zoom="activeGroup.viewport.zoom.level"
-			 ng-class="{'active-tab': activeGroup.currentTab == shot.id, 'opacity-hide': !shot.show}">
+			 ng-style="{left: activeSession.viewport.left + (shot.screenPosition.x * activeSession.viewport.zoom.level), 
+		              top: activeSession.viewport.top + 41 + (shot.screenPosition.y * activeSession.viewport.zoom.level)}"
+			 zoom="activeSession.viewport.zoom.level"
+			 ng-class="{'active-tab': activeSession.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas class="screen-shot" buffer-canvas buffers="shot.buffers" 
 						pixel-width="shot.width" pixel-height="shot.height" 
 						animate-opacity="shot.screenAnimate" 
@@ -141,37 +141,37 @@
 
 <script type="text/ng-template" id="controls.html">
 	<div class="control-list">
-		<div class="control-section" ng-class="{disabled: !activeGroup.currentShot.show}">
-			<label>Opacity <span ng-show="activeGroup.currentShot">{{activeGroup.currentShot.screenOpacity | percent}}</span></label>
-			<input slider="onOpacityChange(shot.id, $value)" ng-disabled="!activeGroup.currentShot.show || activeGroup.currentShot.screenAnimate" 
-				type="range" min="0" max="1" step="0.01" ng-value="activeGroup.currentShot.screenOpacity" value="1"/>
+		<div class="control-section" ng-class="{disabled: !activeSession.currentShot.show}">
+			<label>Opacity <span ng-show="activeSession.currentShot">{{activeSession.currentShot.screenOpacity | percent}}</span></label>
+			<input slider="onOpacityChange(shot.id, $value)" ng-disabled="!activeSession.currentShot.show || activeSession.currentShot.screenAnimate" 
+				type="range" min="0" max="1" step="0.01" ng-value="activeSession.currentShot.screenOpacity" value="1"/>
 			<div class="btn-group">
-				<button class="btn btn-default btn-mini" type="button" ng-click="activeGroup.currentShot.screenAnimate = false" ng-disabled="!activeGroup.currentShot.show">
+				<button class="btn btn-default btn-mini" type="button" ng-click="activeSession.currentShot.screenAnimate = false" ng-disabled="!activeSession.currentShot.show">
 					<span class="fa fa-stop"></span>
 				</button>
-				<button class="btn btn-default btn-mini" type="button" ng-model="activeGroup.currentShot.screenAnimate" 
-								ng-change="onScreenAnimate()" btn-checkbox ng-disabled="!activeGroup.currentShot.show">
+				<button class="btn btn-default btn-mini" type="button" ng-model="activeSession.currentShot.screenAnimate" 
+								ng-change="onScreenAnimate()" btn-checkbox ng-disabled="!activeSession.currentShot.show">
 					<span class="fa fa-play"></span>
 				</button>
 			</div>
 			<div class="time-input mini-input input-prepend input-append">
 				<span class="add-on">Time:</span>
-				<input class="input-mini" ng-model="activeGroup.currentShot.screenAnimateTime" type="number">
+				<input class="input-mini" ng-model="activeSession.currentShot.screenAnimateTime" type="number">
 				<span class="add-on">s</span>
 			</div>
 		</div>
 		
-		<div class="control-section position" ng-class="{disabled: !activeGroup.currentShot.show}">
+		<div class="control-section position" ng-class="{disabled: !activeSession.currentShot.show}">
 			<label>Position</label>
 			<div class="mini-input input-prepend">
 				<span class="add-on">x</span>
-				<input class="input-mini" ng-disabled="!activeGroup.currentShot.show" type="number" ng-model="activeGroup.currentShot.screenPosition.x">
+				<input class="input-mini" ng-disabled="!activeSession.currentShot.show" type="number" ng-model="activeSession.currentShot.screenPosition.x">
 			</div>
 			<div class="mini-input input-prepend">
 				<span class="add-on">y</span>
-				<input class="input-mini"  ng-disabled="!activeGroup.currentShot.show" type="number" ng-model="activeGroup.currentShot.screenPosition.y">
+				<input class="input-mini"  ng-disabled="!activeSession.currentShot.show" type="number" ng-model="activeSession.currentShot.screenPosition.y">
 			</div>
-			<button class="btn btn-default btn-mini" ng-click="resetPosition(activeGroup.currentShot.screenPosition)">
+			<button class="btn btn-default btn-mini" ng-click="resetPosition(activeSession.currentShot.screenPosition)">
 				<span class="fa fa-refresh"></span>
 			</button>
 		</div>

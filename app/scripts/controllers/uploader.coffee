@@ -18,7 +18,7 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 			addScreenShot e.target.result, file
 			$scope.$apply()
 
-		$scope.uploader.open = false
+		$scope.uploader.hide()
 		reader.readAsDataURL file
 
 	addScreenShot = (data, file) ->
@@ -26,8 +26,8 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 		shot.displayURL = file.name
 		shot.screen.path =  data
 
-		$scope.activeGroup.shots.push shot
-		$scope.activeGroup.setCurrentShot shot.id
+		$scope.activeSession.shots.push shot
+		$scope.activeSession.setCurrentShot shot.id
 	
 	$scope.upload = -> forEach $scope.uploadedFiles, uploadImage
 

@@ -8,18 +8,17 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 	$scope.diffThreshold = 0
 
 	setCurrentShots = ->
-		$scope.activeGroup.shots.forEach (shot) ->	shot.selectedForDifference = false
+		$scope.activeSession.shots.forEach (shot) ->	shot.selectedForDifference = false
 
 	$scope.performDiff = ->
-		$scope.selectedShots = _.filter $scope.activeGroup.shots, (shot) ->
+		$scope.selectedShots = _.filter $scope.activeSession.shots, (shot) ->
 			return shot.selectedForDifference
 
 		if $scope.selectedShots.length < 2
-			$scope.diffModal.error = "Please select 2 or more images."
-			$scope.diffModal.showError = true
+			$scope.diffModal.throwError("Please select 2 or more images.")
 			return
 
-		$scope.diffModal.open = false
+		$scope.diffModal.hide()
 
 		loadingAlertId = $scope.addAlert
 			msg: "Performing difference..."
@@ -134,7 +133,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 				type: "difference"
 				data: outputData
 
-			$scope.activeGroup.differences.push shot
+			$scope.activeSession.differences.push shot
 
 	$scope.$watch "diffModal.open", (val) ->
 		if not val
@@ -142,9 +141,9 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
 			$scope.selectedShots = []
 		else
 			setCurrentShots()
-			$scope.diffModal.open = false if $scope.activeGroup.shots.length < 2
+			$scope.diffModal.open = false if $scope.activeSession.shots.length < 2
 
-	$scope.$on "openDiffModal", -> $scope.diffModal.open = true
-	$scope.$on "closeDiffModal", -> $scope.diffModal.open = false
+	$scope.$on "openDiffModal", -> $scope.diffModal.show()
+	$scope.$on "closeDiffModal", -> $scope.diffModal.hide()
 
 

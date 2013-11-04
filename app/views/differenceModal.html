@@ -7,7 +7,7 @@
 	<div class="modal-body">
 		<h5>Select images you want to perform differences on.</h5>
 		<table class="table table-condensed table-hover">
-			<tr ng-repeat="shot in activeGroup.shots" 
+			<tr ng-repeat="shot in activeSession.shots" 
 					ng-click="shot.selectedForDifference = !shot.selectedForDifference"
 					ng-class="{success: shot.selectedForDifference}">
 

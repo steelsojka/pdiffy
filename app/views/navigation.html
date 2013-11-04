@@ -31,25 +31,25 @@
 			</li>
 			<li class="dropdown">
 				<a class="dropdown-toggle">
-					Groups
+					Session
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a ng-click="groupModal.show">
+						<a ng-click="groupModal.show()">
 							<table>
 								<tr>
-									<td><span class="fa fa-group"></span> New Group</td>
+									<td><span class="fa fa-group"></span> New Session</td>
 									<td class="shortcut">Ctrl+g</td>
 								</tr>
 							</table>
 						</a>
 					</li>
 					<li class="divider"></li>
-					<li class="nav-header">Created Groups</li>
-					<li ng-repeat="group in groups">
+					<li class="nav-header">Created Sessions</li>
+					<li ng-repeat="session in sessions">
 						<a ng-click="onPageChange(this)">
-							<span class="fa fa-check" ng-show="group == activeGroup"></span>
-							{{group.name}}
+							<span class="fa fa-check" ng-show="session == activeSession"></span>
+							{{session.name}}
 						</a>
 					</li>
 				</ul>
@@ -60,7 +60,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a ng-click="activeGroup.viewport.zoom.increase()" >
+						<a ng-click="activeSession.viewport.zoom.increase()" >
 							<table>
 								<tr>
 									<td><span class="fa fa-search-plus"></span> Zoom In</td>
@@ -70,7 +70,7 @@
 						</a>
 					</li>
 					<li>
-						<a ng-click="activeGroup.viewport.zoom.decrease()">
+						<a ng-click="activeSession.viewport.zoom.decrease()">
 							<table>
 								<tr>
 									<td><span class="fa fa-search-minus"></span> Zoom Out</td>
@@ -80,7 +80,7 @@
 						</a>
 					</li>
 					<li>
-						<a ng-click="activeGroup.viewport.center()" >
+						<a ng-click="activeSession.viewport.center()" >
 							<table>
 								<tr>
 									<td><span class="fa fa-align-center"></span> Center Content</td>
@@ -90,7 +90,7 @@
 						</a>
 					</li>
 					<li>
-						<a ng-click="activeGroup.viewport.zoom.reset()"><span class="fa fa-refresh"></span> Zoom Reset</a>
+						<a ng-click="activeSession.viewport.zoom.reset()"><span class="fa fa-refresh"></span> Zoom Reset</a>
 					</li>
 					<li class="divider"></li>
 					<li class="dropdown-submenu">
