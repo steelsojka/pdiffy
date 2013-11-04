@@ -233,3 +233,7 @@ td.shortcut {
 .zoom-indicator {
 	padding: 5px 15px;
 }
+
+.navbar-inner > .brand {
+	margin-left: 5px;
+}

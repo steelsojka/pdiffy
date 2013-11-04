@@ -42,22 +42,22 @@
 			</div>
 		</div>
 		<div class="btn-group position-controls">
-			<button class="btn" type="button" ng-click="dock.position = 'left'">
+			<button class="btn btn-default" type="button" ng-click="dock.position = 'left'">
 				<span class="fa fa-arrow-left"></span>
 			</button>
-			<button class="btn" type="button" ng-click="dock.position = 'right'">
+			<button class="btn btn-default" type="button" ng-click="dock.position = 'right'">
 				<span class="fa fa-arrow-right"></span>
 			</button>
-			<button class="btn" ng-click="onScrollTop()">
+			<button class="btn btn-default" ng-click="onScrollTop()">
 				<span class="fa fa-long-arrow-up"></span>
 			</button>
-			<button class="btn" ng-click="onScrollBottom()">
+			<button class="btn btn-default" ng-click="onScrollBottom()">
 				<span class="fa fa-long-arrow-down"></span>
 			</button>
-			<button class="btn" ng-click="activeGroup.viewport.center()">
+			<button class="btn btn-default" ng-click="activeGroup.viewport.center()">
 				<span class="fa fa-align-center"></span>
 			</button>
-			<button class="btn" type="button" ng-model="dock.pinned" btn-checkbox>
+			<button class="btn btn-default" type="button" ng-model="dock.pinned" btn-checkbox>
 				<span class="fa fa-thumb-tack"></span>
 			</button>
 		</div>
@@ -122,7 +122,7 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<a class="btn" ng-click="uploader.hide()">Cancel</a>
+		<a class="btn btn-default" ng-click="uploader.hide()">Cancel</a>
 		<a class="btn btn-primary" ng-click="upload()">Upload</a>
 	</div>
 </div>
@@ -146,10 +146,10 @@
 			<input slider="onOpacityChange(shot.id, $value)" ng-disabled="!activeGroup.currentShot.show || activeGroup.currentShot.screenAnimate" 
 				type="range" min="0" max="1" step="0.01" ng-value="activeGroup.currentShot.screenOpacity" value="1"/>
 			<div class="btn-group">
-				<button class="btn btn-mini" type="button" ng-click="activeGroup.currentShot.screenAnimate = false" ng-disabled="!activeGroup.currentShot.show">
+				<button class="btn btn-default btn-mini" type="button" ng-click="activeGroup.currentShot.screenAnimate = false" ng-disabled="!activeGroup.currentShot.show">
 					<span class="fa fa-stop"></span>
 				</button>
-				<button class="btn btn-mini" type="button" ng-model="activeGroup.currentShot.screenAnimate" 
+				<button class="btn btn-default btn-mini" type="button" ng-model="activeGroup.currentShot.screenAnimate" 
 								ng-change="onScreenAnimate()" btn-checkbox ng-disabled="!activeGroup.currentShot.show">
 					<span class="fa fa-play"></span>
 				</button>
@@ -171,7 +171,7 @@
 				<span class="add-on">y</span>
 				<input class="input-mini"  ng-disabled="!activeGroup.currentShot.show" type="number" ng-model="activeGroup.currentShot.screenPosition.y">
 			</div>
-			<button class="btn btn-mini" ng-click="resetPosition(activeGroup.currentShot.screenPosition)">
+			<button class="btn btn-default btn-mini" ng-click="resetPosition(activeGroup.currentShot.screenPosition)">
 				<span class="fa fa-refresh"></span>
 			</button>
 		</div>
