@@ -1,0 +1,35 @@
+<div modal="diffModal.open" ng-controller="differenceCtrl" 
+		 close="diffModal.open = false" 
+		 options="diffModal.options">
+	<div class="modal-header">
+		<h4>Perform Differences</h4>
+	</div>
+	<div class="modal-body">
+		<h5>Select images you want to perform differences on.</h5>
+		<table class="table table-condensed table-hover">
+			<tr ng-repeat="shot in activeGroup.shots" 
+					ng-click="shot.selectedForDifference = !shot.selectedForDifference"
+					ng-class="{success: shot.selectedForDifference}">
+
+				<td><span class="fa fa-file"></span></td>
+				<td>{{shot.displayURL}}</td>
+			</tr>
+		</table>
+		<form class="">
+			<label for="mode">Mode:</label>
+			<select name="mode" ng-model="diffMode" id="">
+				<option value="subtraction">Subtraction</option>
+				<option value="heatmap">Heatmap</option>
+				<option value="block">Block</option>
+			</select>
+			<label for="threshold">Threshold:</label>
+			<input type="number" max="255" min="0" name="threshold" ng-model="diffThreshold">
+			
+		</form>
+		<div class="error" ng-show="diffModal.showError">{{diffModal.error}}</div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn" ng-click="diffModal.open = false">Cancel</a>
+		<a class="btn btn-primary" ng-click="performDiff()">Perform</a>
+	</div>
+</div>

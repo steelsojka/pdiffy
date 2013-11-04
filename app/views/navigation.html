@@ -7,7 +7,7 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a ng-click="uploader.open = true">
+						<a ng-click="uploader.show()">
 							<table>
 								<tr>
 									<td><span class="fa fa-upload"></span> Upload Images...</td>
@@ -17,7 +17,7 @@
 						</a>
 					</li>
 					<li>
-						<a ng-click="diffModal.open = true">
+						<a ng-click="diffModal.show()">
 							<table>
 								<tr>
 									<td><span class="fa fa-adjust"></span> Perform Difference...</td>
@@ -34,7 +34,14 @@
 				</a>
 				<ul class="dropdown-menu">
 					<li>
-						<a><span class="fa fa-group"></span> New Group</a>
+						<a ng-click="groupModal.show">
+							<table>
+								<tr>
+									<td><span class="fa fa-group"></span> New Group</td>
+									<td class="shortcut">Ctrl+g</td>
+								</tr>
+							</table>
+						</a>
 					</li>
 					<li class="divider"></li>
 					<li class="nav-header">Created Groups</li>
@@ -67,6 +74,16 @@
 								<tr>
 									<td><span class="fa fa-search-minus"></span> Zoom Out</td>
 									<td class="shortcut">Ctrl+-</td>
+								</tr>
+							</table>
+						</a>
+					</li>
+					<li>
+						<a ng-click="activeGroup.viewport.center()" >
+							<table>
+								<tr>
+									<td><span class="fa fa-align-center"></span> Center Content</td>
+									<td class="shortcut">Ctrl+f</td>
 								</tr>
 							</table>
 						</a>

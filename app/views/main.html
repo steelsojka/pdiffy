@@ -54,12 +54,15 @@
 			<button class="btn" ng-click="onScrollBottom()">
 				<span class="fa fa-long-arrow-down"></span>
 			</button>
+			<button class="btn" ng-click="activeGroup.viewport.center()">
+				<span class="fa fa-align-center"></span>
+			</button>
 			<button class="btn" type="button" ng-model="dock.pinned" btn-checkbox>
 				<span class="fa fa-thumb-tack"></span>
 			</button>
 		</div>
 		<div class="zoom-indicator input-prepend">
-			<span class="add-on fa fa-search-plus"></span>
+			<span class="add-on fa fa-search"></span>
 			<input class="input-mini" readonly type="text" ng-value="activeGroup.viewport.zoom.level | percent">
 		</div>
 		<div class="expand-tab" ng-click="dock.hidden = !dock.hidden">
@@ -90,50 +93,14 @@
 						pixel-width="shot.width" pixel-height="shot.height" 
 						animate-opacity="shot.screenAnimate" 
 						animate-time="shot.screenAnimateTime"
-						ng-style="{opacity: shot.screenOpacity, 
-											 top: shot.screenPosition.y + 'px', 
-											 left: shot.screenPosition.x + 'px'}"></canvas>>
+						ng-style="{opacity: shot.screenOpacity}"></canvas>>
 		</canvas>
 	</div>
 </div>
 
 <!-- Difference Modal -->
 
-<div modal="diffModal.open" ng-controller="differenceCtrl" 
-		 close="diffModal.open = false" 
-		 options="diffModal.options">
-	<div class="modal-header">
-		<h4>Perform Differences</h4>
-	</div>
-	<div class="modal-body">
-		<h5>Select images you want to perform differences on.</h5>
-		<table class="table table-condensed table-hover">
-			<tr ng-repeat="shot in activeGroup.shots" 
-					ng-click="shot.selectedForDifference = !shot.selectedForDifference"
-					ng-class="{success: shot.selectedForDifference}">
-
-				<td><span class="fa fa-file"></span></td>
-				<td>{{shot.displayURL}}</td>
-			</tr>
-		</table>
-		<form class="">
-			<label for="mode">Mode:</label>
-			<select name="mode" ng-model="diffMode" id="">
-				<option value="subtraction">Subtraction</option>
-				<option value="heatmap">Heatmap</option>
-				<option value="block">Block</option>
-			</select>
-			<label for="threshold">Threshold:</label>
-			<input type="number" max="255" min="0" name="threshold" ng-model="diffThreshold">
-			
-		</form>
-		<div class="error" ng-show="diffModal.showError">{{diffModal.error}}</div>
-	</div>
-	<div class="modal-footer">
-		<a class="btn" ng-click="diffModal.open = false">Cancel</a>
-		<a class="btn btn-primary" ng-click="performDiff()">Perform</a>
-	</div>
-</div>
+<div ng-include="'views/differenceModal.html'"></div>
 
 <!-- File Upload modal -->
 
@@ -155,7 +122,7 @@
 		</form>
 	</div>
 	<div class="modal-footer">
-		<a class="btn" ng-click="uploader.open = false">Cancel</a>
+		<a class="btn" ng-click="uploader.hide()">Cancel</a>
 		<a class="btn btn-primary" ng-click="upload()">Upload</a>
 	</div>
 </div>
@@ -175,7 +142,7 @@
 <script type="text/ng-template" id="controls.html">
 	<div class="control-list">
 		<div class="control-section" ng-class="{disabled: !activeGroup.currentShot.show}">
-			<label>Opacity</label>
+			<label>Opacity <span ng-show="activeGroup.currentShot">{{activeGroup.currentShot.screenOpacity | percent}}</span></label>
 			<input slider="onOpacityChange(shot.id, $value)" ng-disabled="!activeGroup.currentShot.show || activeGroup.currentShot.screenAnimate" 
 				type="range" min="0" max="1" step="0.01" ng-value="activeGroup.currentShot.screenOpacity" value="1"/>
 			<div class="btn-group">

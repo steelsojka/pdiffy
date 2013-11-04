@@ -25,8 +25,8 @@ angular.module("pdifferenceApp").factory "Viewport", ($injector) ->
 			@canvasHeight = 0
 			@zoom = new Zoom(this)
 		center: ->
-			x = @left + (@canvasWidth * @zoom.level / 2)
-			y = @top + (@canvasHeight * @zoom.level / 2)
+			x = @left + ((@canvasWidth * @zoom.level) - $window.innerWidth) / 2
+			y = @top + ((@canvasHeight * @zoom.level) - $window.innerHeight) / 2
 			$window.scrollTo x, y
 		adjust: ->
 			shots = @group.shots.concat @group.differences

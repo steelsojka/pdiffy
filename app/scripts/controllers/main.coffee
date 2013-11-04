@@ -7,29 +7,16 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 	$document = $injector.get "$document"
 	$rootScope = $injector.get "$rootScope"
 	Group = $injector.get "Group"
+	Modal = $injector.get "Modal"
 
 	$scope.dock =
 		position: "left"
 		pinned: true
 		hidden: false
 
-	$scope.uploader =
-		open: false
-		options:
-			backdropFade: true
-			dialogFade: true
-			keyboard: true
-		showError: false
-		error: ""
-
-	$scope.diffModal =
-		open: false
-		options:
-			backdropFade: true
-			dialogFade: true
-			keyboard: true
-		showError: false
-		error: ""
+	$scope.uploader = new Modal()
+	$scope.diffModal = new Modal()
+	$scope.groupModal = new Modal()
 
 	$scope.alerts = []
 
@@ -72,8 +59,9 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 		"ctrl+shift+d": -> $scope.dock.hidden = not $scope.dock.hidden
 		"ctrl+h": -> $scope.activeGroup.currentShot.show = not $scope.activeGroup.currentShot.show
 		"ctrl+backspace": -> $scope.activeGroup.removeShot $scope.activeGroup.currentShot
-		"ctrl+u": -> $scope.uploader.open = true
-		"ctrl+d": -> $scope.diffModal.open = true
+		"ctrl+u": -> $scope.uploader.show()
+		"ctrl+d": -> $scope.diffModal.show()
+		"ctrl+f": -> $scope.activeGroup.viewport.center()
 		"ctrl+shift+p": -> $scope.dock.pinned = not $scope.dock.pinned
 
 	for own key, fn of keyBindings
