@@ -48,6 +48,8 @@ angular.module("pdifferenceApp").factory "Session", ($injector) ->
 				shot.type is "source"
 		getShotById: (id) -> _.find @shots, (shot) -> shot.id is id
 		getDifferenceById: (id) -> _.find @differences, (shot) -> shot.id is id
+		getMaxHeight: -> if @shots.length is 0 then 0 else _(@shots).pluck("height").max().value()
+		getMaxWidth: -> if @shots.length is 0 then 0 else _(@shots).pluck("width").max().value()
 		setCurrentShot: (shot) ->
 			@currentTab = shot. id
 			@currentShot = shot
