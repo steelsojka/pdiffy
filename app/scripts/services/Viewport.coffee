@@ -27,8 +27,10 @@ angular.module("pdifferenceApp").factory "Viewport", ($injector) ->
 		center: ->
 			x = @left + ((@canvasWidth * @zoom.level) - $window.innerWidth) / 2
 			y = @top + ((@canvasHeight * @zoom.level) - $window.innerHeight) / 2
-			$window.scrollTo x, y
+			@setPosition x, y
+		setPosition: (x=$window.pageXOffset, y=$window.pageYOffset) -> $window.scrollTo x, y
 		adjust: ->
+			# TODO: account for images that are smaller than window size
 			shots = @session.shots.concat @session.differences
 			maxHeight = @session.getMaxHeight()
 			maxWidth = @session.getMaxWidth()
@@ -36,7 +38,7 @@ angular.module("pdifferenceApp").factory "Viewport", ($injector) ->
 			@canvasHeight = maxHeight
 			@left = maxWidth / 2
 			@top = maxHeight / 2
-			@height = maxHeight * @zoom.level + (@top * 2)
-			@width = maxWidth * @zoom.level + (@left * 2)
+			@height = Math.max maxHeight * @zoom.level + (@top * 2), $window.innerHeight
+			@width = Math.max maxWidth * @zoom.level + (@left * 2), $window.innerWidth
 
 	return Viewport

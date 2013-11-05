@@ -35,7 +35,7 @@
 		</li>
 	</ul>
 	<div class="tab-controls">
-		<div ng-include src="'controls.html'"></div>
+		<div ng-include src="'views/controls.html'"></div>
 	</div>
 	<div class="btn-group position-controls">
 		<button class="btn btn-default" type="button" ng-click="dock.position = 'left'">
@@ -128,7 +128,7 @@
 			</tr>
 		</table>
 		<form>
-			<input file-upload="onFileSelect($files)" name="files[]" type="file" multiple upload>
+			<input file-upload="onFileSelect($files)" accept=".bmp,.jpg,.jpeg,.gif,.png,.tiff" name="files[]" type="file" multiple upload>
 		</form>
 	</div>
 	<div class="modal-footer">
@@ -147,66 +147,3 @@
 		</div>
 	</alert>
 </div>
-
-
-<script type="text/ng-template" id="controls.html">
-	<div class="control-list">
-		<div class="control-section" ng-class="{disabled: !activeSession.currentShot.show}">
-			<label>Opacity <span ng-show="activeSession.currentShot">{{activeSession.currentShot.screenOpacity | percent}}</span></label>
-			<input slider="activeSession.currentShot.setOpacity($value)" ng-disabled="!activeSession.currentShot.show || activeSession.currentShot.screenAnimate" 
-				type="range" min="0" max="1" step="0.01" ng-value="activeSession.currentShot.screenOpacity" value="1"/>
-			<div class="btn-group">
-				<button class="btn btn-default btn-mini" type="button" ng-click="activeSession.currentShot.screenAnimate = false" ng-disabled="!activeSession.currentShot.show">
-					<span class="fa fa-stop"></span>
-				</button>
-				<button class="btn btn-default btn-mini" type="button" ng-model="activeSession.currentShot.screenAnimate" 
-								btn-checkbox ng-disabled="!activeSession.currentShot.show">
-					<span class="fa fa-play"></span>
-				</button>
-			</div>
-			<div class="time-input mini-input input-prepend input-append">
-				<span class="add-on">Time:</span>
-				<input class="input-mini" ng-model="activeSession.currentShot.screenAnimateTime" type="number">
-				<span class="add-on">s</span>
-			</div>
-		</div>
-		
-		<div class="control-section position" ng-class="{disabled: !activeSession.currentShot.show}">
-			<label>Position</label>
-			<div class="mini-input input-prepend">
-				<span class="add-on">x</span>
-				<input class="input-mini" ng-disabled="!activeSession.currentShot.show" type="number" ng-model="activeSession.currentShot.screenPosition.x">
-			</div>
-			<div class="mini-input input-prepend">
-				<span class="add-on">y</span>
-				<input class="input-mini"  ng-disabled="!activeSession.currentShot.show" type="number" ng-model="activeSession.currentShot.screenPosition.y">
-			</div>
-			<button class="btn btn-default btn-mini" ng-click="activeSession.currentShot.resetPosition()">
-				<span class="fa fa-refresh"></span>
-			</button>
-		</div>
-
-		<div class="control-section" ng-show="shot.type != 'source' && shot.type != 'upload'">
-			<label>Info</label>
-			<table class="table table-condensed">
-				<tr>
-					<td>Total Pixels</td>
-					<td>{{shot.data.totalPixels | number}}</td>
-				</tr>
-				<tr>
-					<td>Same Pixels</td>
-					<td>{{shot.data.numberOfSamePixels | number}}</td>
-				</tr>
-				<tr>
-					<td>Different Pixels</td>
-					<td>{{shot.data.numberOfDifferentPixels | number}}</td>
-				</tr>
-				<tr>
-					<td>Difference Ratio</td>
-					<td>{{shot.data.differenceRatio | percent}}</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-</script>
-

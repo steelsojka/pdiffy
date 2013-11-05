@@ -25,5 +25,5 @@ angular.module("pdifferenceApp").directive "toolbelt", ($window) ->
 
 			switch scope.activeSession.toolbelt.active
 				when 'move'
-					$window.scrollTo windowX + movedX, windowY + movedY
-			return	
+					scope.activeSession.viewport.setPosition windowX + movedX, windowY + movedY
+			return
