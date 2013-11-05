@@ -19,4 +19,8 @@ angular.module('pdifferenceApp').factory 'Shot', ->
 			@canvasContext = null
 
 			angular.extend this, options
+		resetPosition: ->
+			@screenPosition.x = 0
+			@screenPosition.y = 0
+		setOpacity: (value) -> @screenOpacity = value
 	return Shot

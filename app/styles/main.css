@@ -84,12 +84,10 @@ body {
 .controls.dock-left {
 	left: 0px;
 	border-right: 1px solid rgba(0,0,0,0.4);
-	border-bottom-right-radius: 10px;
 }
 .controls.dock-right {
 	right: 0px;
 	border-left: 1px solid rgba(0,0,0,0.4);
-	border-bottom-left-radius: 10px;
 	/*box-shadow: -3px 0px 15px rgba(0,0,0,0.3);*/
 }
 .time-input {
@@ -137,14 +135,10 @@ body {
 }
 .controls.dock-left .expand-tab {
 	right: -17px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
 	border-right: 1px solid rgba(0,0,0,0.4);
 }
 .controls.dock-right .expand-tab {
 	left: -17px;
-	border-top-left-radius: 5px;
-	border-bottom-left-radius: 5px;
 	border-left: 1px solid rgba(0,0,0,0.4);
 }
 
@@ -232,8 +226,18 @@ td.shortcut {
 
 .zoom-indicator {
 	padding: 5px 15px;
+	display: block;
 }
 
 .navbar-inner > .brand {
 	margin-left: 5px;
 }
+
+.toolbelt {
+	margin-left: 0 !important;
+}
+
+[tool=move] {
+	cursor: move;
+}
+

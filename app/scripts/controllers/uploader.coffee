@@ -27,7 +27,7 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 		shot.screen.path =  data
 
 		$scope.activeSession.shots.push shot
-		$scope.activeSession.setCurrentShot shot.id
+		$scope.activeSession.setCurrentShot shot
 	
 	$scope.upload = -> forEach $scope.uploadedFiles, uploadImage
 

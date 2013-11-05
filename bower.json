@@ -10,7 +10,7 @@
     "angular-resource": "~1.0.7",
 		"angular-ui-bootstrap-bower": "~0.4.x",
 		"lodash": "~2.2.1",
-		"font-awesome": "~4.0.0",
+		"font-awesome": "~4.0.2",
 		"mousetrap": ""
   },
   "devDependencies": {
