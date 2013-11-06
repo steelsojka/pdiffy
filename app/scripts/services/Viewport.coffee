@@ -36,9 +36,9 @@ angular.module("pdifferenceApp").factory "Viewport", ($injector) ->
 			maxWidth = @session.getMaxWidth()
 			@canvasWidth = maxWidth
 			@canvasHeight = maxHeight
-			@left = maxWidth / 2
-			@top = maxHeight / 2
-			@height = Math.max maxHeight * @zoom.level + (@top * 2), $window.innerHeight
-			@width = Math.max maxWidth * @zoom.level + (@left * 2), $window.innerWidth
+			@left = $window.innerWidth - 200
+			@top = $window.innerHeight - 200
+			@height = maxHeight * @zoom.level + (@top * 2)
+			@width = maxWidth * @zoom.level + (@left * 2)
 
 	return Viewport

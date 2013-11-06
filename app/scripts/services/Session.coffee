@@ -38,20 +38,15 @@ angular.module("pdifferenceApp").factory "Session", ($injector) ->
 				@setCurrentShot otherArray[otherArray.length - 1]
 			else
 				@currentShot = null
+
+			@viewport.adjust()
 		addDifference: (diff) -> @differences.push diff
-		removeDifference: (shot) ->
-			_.pull @differences, shot
-			if @differences.length < 1 and @shots.length > 1
-				@setCurrentShot @shots[0]
-		findSource: ->
-			@source = _.find group.shots, (shot) ->
-				shot.type is "source"
 		getShotById: (id) -> _.find @shots, (shot) -> shot.id is id
 		getDifferenceById: (id) -> _.find @differences, (shot) -> shot.id is id
 		getMaxHeight: -> if @shots.length is 0 then 0 else _(@shots).pluck("height").max().value()
 		getMaxWidth: -> if @shots.length is 0 then 0 else _(@shots).pluck("width").max().value()
 		setCurrentShot: (shot) ->
-			@currentTab = shot. id
+			@currentTab = shot.id
 			@currentShot = shot
 		moveToShot: (index) ->
 			return if @currentShot is null
@@ -59,7 +54,7 @@ angular.module("pdifferenceApp").factory "Session", ($injector) ->
 			@setCurrentShot shotArray[index] if shotArray.length > index >= 0
 		getActiveSet: ->
 			return if @currentShot is null
-			if @currentShot.type is "difference" then @differences else @shots
+			if _.contains @differences, @currentShot then @differences else @shots
 		getActiveSetIndex: ->
 			set = @getActiveSet()
 			return if not angular.isArray set

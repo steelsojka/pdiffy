@@ -29,7 +29,7 @@
 				<span class="fa" ng-click="shot.show = !shot.show" 
 					 ng-class="{'fa-eye': shot.show, 'fa-eye-slash': !shot.show}"></span>
 				<div class="url-display">Difference {{$index + 1}}</div>
-				<span class="fa fa-trash-o" ng-click="activeSession.removeDifference(shot)"></span>
+				<span class="fa fa-trash-o" ng-click="activeSession.removeShot(shot)"></span>
 				<span class="fa font-red fa-youtube-play" ng-show="shot.screenAnimate || shot.differenceAnimate"></span>
 			</a>
 		</li>
