@@ -85,7 +85,8 @@
 	
 	<div ng-repeat="shot in activeSession.shots" 
 		ng-style="{left: activeSession.viewport.left + (shot.screenPosition.x * activeSession.viewport.zoom.level), 
-		           top: activeSession.viewport.top + 41 + (shot.screenPosition.y * activeSession.viewport.zoom.level)}" class="shot-container" 
+		top: activeSession.viewport.top + 41 + (shot.screenPosition.y * activeSession.viewport.zoom.level)}" 
+		class="shot-container" 
 			 zoom="activeSession.viewport.zoom.level"
 			 ng-class="{'active-tab': activeSession.currentTab == shot.id, 'opacity-hide': !shot.show}">
 		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 

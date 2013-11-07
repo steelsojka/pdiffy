@@ -183,6 +183,10 @@ input[type="range"] {
 	overflow: hidden;
 }
 
+.shot-container:hover {
+	box-shadow: 0 0 0 2px blue;
+}
+
 .alerts {
 	width: 400px;
 	right: 10px;
