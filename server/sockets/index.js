@@ -7,7 +7,8 @@ var io = require( './../server' ).io;
 io.sockets.on('connection', function( socket ) {
 
 	socket.emit('send:onConnect', {
-		data: 'Sockets Connected'
+		message: 'Sockets Connected',
+    data: {}
 	});
 
 	// Example socket
