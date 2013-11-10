@@ -15,7 +15,8 @@ module.exports = function (grunt) {
     yeoman: {
       // configurable paths
       app: require('./bower.json').appPath || 'app',
-      dist: 'dist'
+      dist: 'dist',
+      server: 'server'
     },
     watch: {
       coffee: {
@@ -239,6 +240,17 @@ module.exports = function (grunt) {
           ]
         }]
       },
+      server: {
+        files: [{
+          expand: true,
+          dot: true,
+          cwd: '<%= yeoman.server %>',
+          dest: '<%= yeoman.dist %>/<%= yeoman.server %>',
+          src: [
+            '{,*/}*'
+          ]
+        }]
+      },
       styles: {
         expand: true,
         cwd: '<%= yeoman.app %>/styles',
@@ -247,6 +259,12 @@ module.exports = function (grunt) {
       }
     },
     concurrent: {
+      watch: {
+        tasks: ['nodemon:server', 'watch'],
+        options: {
+          logConcurrentOutput: true
+        }
+      },
       server: [
         'coffee:dist',
         'copy:styles'
@@ -292,6 +310,15 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+    nodemon: {
+      server: {
+        options: {
+          file: "<%= yeoman.server %>/server.js",
+          cwd: __dirname
+
+        }
+      }
     }
   });
 
@@ -304,8 +331,8 @@ module.exports = function (grunt) {
       'clean:server',
       'concurrent:server',
       'autoprefixer',
-      'connect:livereload',
-      'watch'
+      //'connect:livereload',
+      'concurrent:watch'
     ]);
   });
 
@@ -324,6 +351,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'copy:dist',
+    'copy:server',
     'cdnify',
     'ngmin',
     'cssmin',
