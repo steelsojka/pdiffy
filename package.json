@@ -1,7 +1,10 @@
 {
   "name": "test",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+		"express": "3.x",
+		"socket.io": "*"
+	},
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
