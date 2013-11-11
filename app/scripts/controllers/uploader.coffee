@@ -1,37 +1,49 @@
 angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
 
-	forEach = angular.forEach
+  $scope.uploadedFiles = []
+  $scope.imageUrls = []
 
-	$scope.uploadedFiles = []
+  $scope.onFileSelect = (files) ->
+    $scope.uploadedFiles.push file for file in files
+  
+  uploadImage = (file) ->
+    reader = new FileReader()
+    alertId = $scope.addAlert
+      loading: true
+      msg: "Loading image #{file.name}"
 
-	$scope.onFileSelect = (files) ->
-		$scope.uploadedFiles.push file for file in files
-	
-	uploadImage = (file) ->
-		reader = new FileReader()
-		alertId = $scope.addAlert
-			loading: true
-			msg: "Loading image #{file.name}"
+    reader.onload = (e) ->
+      $scope.removeAlert alertId
+      addScreenShot e.target.result, file, 'upload'
+      $scope.$apply()
 
-		reader.onload = (e) ->
-			$scope.removeAlert alertId
-			addScreenShot e.target.result, file
-			$scope.$apply()
+    reader.readAsDataURL file
 
-		$scope.uploader.hide()
-		reader.readAsDataURL file
+  uploadUrl = (url) -> addScreenShot url, {name: url}, 'link'
 
-	addScreenShot = (data, file) ->
-		shot = new Shot()
-		shot.displayURL = file.name
-		shot.screen.path =  data
+  addScreenShot = (data, file, type) ->
+    shot = new Shot {type: type}
+    shot.displayURL = file.name
+    shot.screen.path =  data
 
-		$scope.activeSession.shots.push shot
-		$scope.activeSession.setCurrentShot shot
-	
-	$scope.upload = -> forEach $scope.uploadedFiles, uploadImage
+    $scope.activeSession.shots.push shot
+    $scope.activeSession.setCurrentShot shot
+    $scope.uploader.hide()
 
-	$scope.$watch "uploader.open", (value) -> $scope.uploadedFiles = [] if value is true
+  $scope.addUrl = ->
+    if $scope.imageUrl.length > 0
+      $scope.imageUrls.push $scope.imageUrl
+      $scope.imageUrl = ''
+  
+  $scope.upload = ->
+    uploadImage image for image in $scope.uploadedFiles
+    uploadUrl url for url in $scope.imageUrls
+    return
 
-	return
+  $scope.$watch "uploader.open", (value) ->
+    if value is true
+      $scope.uploadedFiles = []
+      $scope.imageUrls = []
+
+  return
 

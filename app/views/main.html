@@ -126,10 +126,17 @@
 			<tr ng-repeat="file in uploadedFiles">
 				<td><span class="fa fa-file"></span></td>
 				<td>{{file.name}}</td>
-			</tr>
+      </tr>
+      <tr ng-repeat="url in imageUrls">
+				<td><span class="fa fa-link"></span></td>
+        <td>{{url}}</td>
+      </tr>
 		</table>
 		<form>
-			<input file-upload="onFileSelect($files)" accept=".bmp,.jpg,.jpeg,.gif,.png,.tiff" name="files[]" type="file" multiple upload>
+      <input file-upload="onFileSelect($files)" accept=".bmp,.jpg,.jpeg,.gif,.png,.tiff" name="files[]" type="file" multiple upload>
+      <div>- or -</div>
+      <input type="text" class="upload-url" placeholder="Enter a URL" ng-model="imageUrl">
+      <button ng-click="addUrl()"><span class='fa fa-plus'></span></button>
 		</form>
 	</div>
 	<div class="modal-footer">

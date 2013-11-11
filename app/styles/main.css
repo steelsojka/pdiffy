@@ -244,3 +244,8 @@ td.shortcut {
 	cursor: move;
 }
 
+.upload-url {
+  margin-bottom: 0 !important;
+  width: 485px;
+}
+
