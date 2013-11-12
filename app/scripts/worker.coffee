@@ -1,3 +1,5 @@
+isServer = if exports then true else false
+
 compare = (pixels) ->
 	pix = []
 	for x in [0...pixels.length]
@@ -14,7 +16,7 @@ checkDifference = (r, g, b) -> r > 0 or g > 0 or b > 0
 
 checkThreshold = (r, g, b, threshold) -> r <= threshold and g <= threshold and b <= threshold
 
-self.addEventListener "message", (e) ->
+difference = (e) ->
 	data = e.data.imageData
 	outputData =
 		numberOfSamePixels: 0
@@ -54,13 +56,22 @@ self.addEventListener "message", (e) ->
 		contextData[i + 3] = 255
 
 		outputData.totalPixels++
-	
-	self.postMessage
+
+  imageData =
 		event: "done"
 		id: e.data.id
 		data: context
 		y: e.data.startY
 		block: e.data.block
 		stats: outputData
+  
+  if isServer
+    return imageData
+  else
+    self.postMessage imageData
+    self.close()
 
-	self.close()
+if isServer
+  exports.difference = difference
+else
+  self.addEventListener "message", difference
