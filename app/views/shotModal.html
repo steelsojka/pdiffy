@@ -1,0 +1,18 @@
+<div modal="screenShotModal.open" ng-controller="takeShotCtrl" 
+		 close="screenShotModal.open = false" 
+		 options="screenShotModal.options">
+	<div class="modal-header">
+		<h4>Take Screenshot</h4>
+	</div>
+	<div class="modal-body">
+    <h5>Enter the URL of the website you want to take a screenshot of.</h5>
+    <div>
+      <input type="text" class="input-block-level" placeholder="Enter a URL" ng-model="url">
+    </div>
+		<div class="error" ng-show="screenShotModal.showError">{{screenShotModal.error}}</div>
+	</div>
+	<div class="modal-footer">
+		<a class="btn btn-default" ng-click="screenShotModal.open = false">Cancel</a>
+		<a class="btn btn-primary" ng-click="takeShot()">Confirm</a>
+	</div>
+</div>

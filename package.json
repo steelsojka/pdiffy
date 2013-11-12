@@ -4,7 +4,9 @@
   "dependencies": {
 		"express": "3.x",
 		"socket.io": "",
-    "lodash": "~2.2.1"
+    "lodash": "~2.2.1",
+    "optimist": "~0.4.0",
+    "webshot": "~0.7.0"
 	},
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -30,6 +32,9 @@
     "grunt-ngmin": "~0.0.2",
     "time-grunt": "~0.1.0",
 		"grunt-nodemon": "~0.1.1"
+  },
+  "bin": {
+    "pdiffy": "./bin/pdiffy"
   },
   "engines": {
     "node": ">=0.8.0"

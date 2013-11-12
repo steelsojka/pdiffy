@@ -17,6 +17,7 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 	$scope.uploader = new Modal()
 	$scope.diffModal = new Modal()
 	$scope.groupModal = new Modal()
+	$scope.screenShotModal = new Modal()
 
 	$scope.alerts = []
 
