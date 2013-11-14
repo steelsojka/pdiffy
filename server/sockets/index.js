@@ -4,6 +4,7 @@
 var io = require( './../server' ).io;
 var webshot = require("webshot");
 var fs = require('fs');
+var _ = require("lodash");
 
 // Connection route - bootstraps the other socket routes
 io.sockets.on('connection', function( socket ) {
@@ -14,7 +15,7 @@ io.sockets.on('connection', function( socket ) {
 	});
 
   socket.on("send:takeShot", function(shot) {
-    webshot(shot.url, function(err, stream) {
+    webshot(shot.url, _.omit(shot, "url"), function(err, stream) {
       stream.on('data', function(data) {
         socket.emit('data:chunk', {data: data.toString('binary')});
       });

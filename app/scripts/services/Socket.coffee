@@ -20,12 +20,9 @@ angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
 
     captureScreen: (shotData, callback) ->
       buffers = ""
-      imageData = ctx.createImageData shotData.width, shotData.height
       @takingShot = true
       
-      onChunk = (data) ->
-        buffers += data.data
-
+      onChunk = (data) -> buffers += data.data
       onEnd = (data) =>
         image = "data:image/png;base64,#{btoa buffers}"
         @io.removeListener 'data:end', onEnd
@@ -33,8 +30,8 @@ angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
         @session.addShot new Shot
           screen:
             path: image
-          width: shotData.width
-          height: shotData.height
+          width: shotData.shotWidth
+          height: shotData.shotHeight
         callback()
        
       @io.emit "send:takeShot", shotData
