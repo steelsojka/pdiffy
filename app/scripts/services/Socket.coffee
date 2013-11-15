@@ -1,7 +1,6 @@
 angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
 
   bind = angular.bind
-  ctx = $document[0].createElement("canvas").getContext '2d'
 
   class Socket
     constructor: (@session) ->
@@ -20,6 +19,7 @@ angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
 
     captureScreen: (shotData, callback) ->
       buffers = ""
+      url = shotData.url
       @takingShot = true
       
       onChunk = (data) -> buffers += data.data
@@ -28,6 +28,7 @@ angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
         @io.removeListener 'data:end', onEnd
         @io.removeListener 'data:chunk', onChunk
         @session.addShot new Shot
+          displayURL: url 
           screen:
             path: image
           width: shotData.shotWidth

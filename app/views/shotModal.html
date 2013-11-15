@@ -8,17 +8,37 @@
     <h5>Enter the URL of the website you want to take a screenshot of.</h5>
     <div>
       <input type="text" class="input-block-level" placeholder="Enter a URL" ng-model="shot.url">
-		</div>
-		<h5>Screen Size:</h5>
-		<div>
-			<input type="text" class="input-mini" ng-model="shot.screenSize.width"> x 
-			<input type="text" class="input-mini" ng-model="shot.screenSize.height">
-		</div>
-		<h5>Shot Size:</h5>
-		<div>
-			<input type="text" class="input-mini" ng-model="shot.shotSize.width"> x 
-			<input type="text" class="input-mini" ng-model="shot.shotSize.height">
-		</div>
+    </div>
+    <table class="full-width">
+      <tr>
+        <td><h5>User Agent:</h5></td>
+        <td><h5>Viewport:</h5></td>
+      </tr>
+      <tr>
+        <td>
+          <div>
+            <select ng-model="shot.userAgent" ng-options="agent as name for (name, agent) in userAgents"></select>
+          </div>
+        </td>
+        <td>
+          <select ng-model="viewport" ng-options="viewport as device for (device, viewport) in viewports"></select>
+        </td>
+      </tr>
+      <tr>
+        <td><h5>Screen Size:</h5></td>
+        <td><h5>Shot Size:</h5></td>
+      </tr>
+        <td>
+          <input type="text" class="input-mini" ng-model="shot.screenSize.width"> x 
+          <input type="text" class="input-mini" ng-model="shot.screenSize.height">
+        </td>
+        <td>
+          <input type="text" class="input-mini" ng-model="shot.shotSize.width"> x 
+          <input type="text" class="input-mini" ng-model="shot.shotSize.height">
+        </td>
+      <tr>
+      </tr>
+    </table>
 		<div class="error" ng-show="screenShotModal.showError">{{screenShotModal.error}}</div>
 	</div>
 	<div class="modal-footer">

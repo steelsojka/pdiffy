@@ -60,6 +60,7 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 		"ctrl+backspace": -> $scope.activeSession.removeShot $scope.activeSession.currentShot
 		"ctrl+u": -> $scope.uploader.show()
 		"ctrl+d": -> $scope.diffModal.show()
+		"ctrl+e": -> $scope.screenShotModal.show()
 		"ctrl+f": -> $scope.activeSession.viewport.center()
 		"ctrl+shift+p": -> $scope.dock.pinned = not $scope.dock.pinned
 
