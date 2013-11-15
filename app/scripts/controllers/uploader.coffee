@@ -24,7 +24,7 @@ angular.module("pdifferenceApp").controller "uploaderCtrl", ($scope, Shot) ->
   addScreenShot = (data, file, type) ->
     shot = new Shot {type: type}
     shot.displayURL = file.name
-    shot.screen.path =  data
+    shot.path =  data
 
     $scope.activeSession.shots.push shot
     $scope.activeSession.setCurrentShot shot

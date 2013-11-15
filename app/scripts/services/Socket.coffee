@@ -28,9 +28,8 @@ angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
         @io.removeListener 'data:end', onEnd
         @io.removeListener 'data:chunk', onChunk
         @session.addShot new Shot
-          displayURL: url 
-          screen:
-            path: image
+          displayURL: url
+          path: image
           width: shotData.shotWidth
           height: shotData.shotHeight
         callback()
