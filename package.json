@@ -1,13 +1,25 @@
 {
   "name": "pdiffy",
   "version": "0.0.1",
+  "preferGlobal": true,
+  "author": "Steven Sojka <steelsojka@gmail.com>",
+  "keywords": [
+    "pdiff",
+    "perceptual",
+    "differnce"
+  ],
+  "contributors": [
+    {
+      "name": "Steven Sojka",
+      "email": "steelsojka@gmail.com"
+    }
+  ],
   "dependencies": {
 		"express": "3.x",
 		"socket.io": "",
     "lodash": "~2.2.1",
     "optimist": "~0.4.0",
-    "webshot": "~0.7.0",
-    "png-js": "~0.1.1"
+    "webshot": "~0.7.0"
 	},
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -42,5 +54,6 @@
   },
   "scripts": {
     "test": "grunt test"
-  }
+  },
+  "license": "MIT"
 }

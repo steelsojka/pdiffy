@@ -257,3 +257,8 @@ input.no-margin,
 select.no-margin {
   margin: 0 !important;
 }
+
+.config-modal tr td:first-child {
+  width: 1px;
+  padding: 0 10px 0 0;
+}

@@ -3,10 +3,11 @@ var io = require("socket.io");
 var http = require("http");
 var path = require("path");
 var _ = require("lodash");
+var config = require("../config.json");
 
 var app = exports.app = express();
 
-app.set("port", 9000);
+app.set("port", config.port);
 
 app.configure("development", function() {
   app.use(express.errorHandler({

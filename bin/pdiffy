@@ -3,6 +3,8 @@
 var _ = require("lodash");
 var argv = require("optimist").argv;
 
-if (argv.i || argv.interface) {
+process.env.NODE_ENV = "production"
+
+// if (argv.i || argv.interface) {
   require("../server/server");
-}
+// }

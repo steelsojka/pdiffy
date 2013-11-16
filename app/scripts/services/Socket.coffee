@@ -37,15 +37,13 @@ angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
       @io.emit "send:takeShot", shotData
       @io.on "data:chunk", onChunk
       @io.on "data:end", onEnd
-     
-    onDataChunk: (data) ->
-      console.log data.data
-    onDataEnd: (data) ->
-      console.log data.message
-      
 
+    getConfig: (callback) ->
+      onConfigRecieve = (config) =>
+        callback config
+        @io.removeListener "data:config"
 
+      @io.on "data:config", onConfigRecieve
+      @io.emit "send:getConfig"
 
-
-
-
+    saveConfig: (config) -> @io.emit "send:saveConfig", config

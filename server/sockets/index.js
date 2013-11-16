@@ -28,6 +28,19 @@ io.sockets.on('connection', function( socket ) {
     });
   });
 
+  socket.on("send:getConfig", function() {
+    var config = fs.readFile("config.json", {encoding: "utf-8"}, function(err, data) {
+      if (err) throw err;
+      socket.emit("data:config", data);
+    });
+  });
+
+  socket.on("send:saveConfig", function(config) {
+    fs.writeFile("config.json", JSON.stringify(config, null, "\t"), function(err) {
+      if (err) throw err;
+    });
+  });
+
 	// Example socket
 	// @todo remove the requirement to pass in the socket
 	// require( './example' )( socket );
