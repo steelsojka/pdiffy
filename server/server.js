@@ -3,7 +3,17 @@ var io = require("socket.io");
 var http = require("http");
 var path = require("path");
 var _ = require("lodash");
-var config = require("../config.json");
+var fs = require("fs");
+var rootPath = path.normalize(__dirname + "/../");
+
+/*
+if (!fs.existsSync(process.cwd() + "pdiffy.config.json")) {
+  console.log("No config file exists in working directory! Using default.");
+  var configDefaults = fs.readFileSync(rootPath + "server/config-defaults.json", {encoding: "utf-8"});
+  fs.writeFileSync("config.json", configDefaults);
+}*/
+
+var config = require("./config-defaults.json");
 
 var app = exports.app = express();
 
