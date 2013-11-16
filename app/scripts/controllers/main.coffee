@@ -38,10 +38,7 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
 
   $scope.broadcast = (event) -> $rootScope.$broadcast.apply this, arguments
 
-  $scope.onPageChange = (e) ->
-    $scope.activeSession = @group
-    $scope.activeSession.currentTab = $scope.activeSession.shots[0]
-    $scope.$broadcast "centerElements"
+  $scope.changeSession = (session) -> $scope.activeSession = session
 
   $scope.onScrollTop = -> $window.scrollTo 0,0
 
@@ -65,7 +62,8 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
     "ctrl+u": -> $scope.uploader.show()
     "ctrl+d": -> $scope.diffModal.show()
     "ctrl+s": -> $scope.screenShotModal.show()
-    "ctrl+e": -> console.log($scope.activeSession.export())
+    "ctrl+e": -> $scope.activeSession.export()
+    "ctrl+i": -> $scope.importer.show()
     "ctrl+f": -> $scope.activeSession.viewport.center()
     "ctrl+shift+p": -> $scope.dock.pinned = not $scope.dock.pinned
 
@@ -73,16 +71,16 @@ angular.module('pdifferenceApp').controller 'MainCtrl', ($scope, $injector) ->
     keyBindings[key] = _.wrap fn, (func, e) ->
       e.preventDefault()
       $scope.$apply _.partial(func, e)
+    Mousetrap.bindGlobal key, keyBindings[key]
 
   Mousetrap.bind ["ctrl+up", "ctrl+k"], (e) ->
     e.preventDefault()
     $scope.$apply ->
       $scope.activeSession.moveToShot $scope.activeSession.getActiveSetIndex() - 1
     return
-  Mousetrap.bind ["ctrl+down", "ctrl+j"], (e) -> 
+  Mousetrap.bind ["ctrl+down", "ctrl+j"], (e) ->
     e.preventDefault()
     $scope.$apply ->
       $scope.activeSession.moveToShot $scope.activeSession.getActiveSetIndex() + 1
-  Mousetrap.bind keyBindings
 
   return

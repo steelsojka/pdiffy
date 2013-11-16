@@ -7,7 +7,7 @@
 	<div class="modal-body">
     <h5>Enter the URL of the website you want to take a screenshot of.</h5>
     <div>
-      <input type="text" class="input-block-level" placeholder="Enter a URL" ng-model="shot.url">
+      <input type="text" class="input-block-level no-margin" placeholder="Enter a URL" ng-model="shot.url">
     </div>
     <table class="full-width">
       <tr>
@@ -17,11 +17,11 @@
       <tr>
         <td>
           <div>
-            <select ng-model="shot.userAgent" ng-options="agent as name for (name, agent) in userAgents"></select>
+            <select class="no-margin" ng-model="shot.userAgent" ng-options="agent as name for (name, agent) in userAgents"></select>
           </div>
         </td>
         <td>
-          <select ng-model="viewport" ng-options="viewport as device for (device, viewport) in viewports"></select>
+          <select class="no-margin" ng-model="viewport" ng-options="viewport as device for (device, viewport) in viewports"></select>
         </td>
       </tr>
       <tr>
@@ -29,14 +29,23 @@
         <td><h5>Shot Size:</h5></td>
       </tr>
         <td>
-          <input type="text" class="input-mini" ng-model="shot.screenSize.width"> x 
-          <input type="text" class="input-mini" ng-model="shot.screenSize.height">
+          <input type="text" class="input-mini no-margin" ng-model="shot.screenSize.width"> x 
+          <input type="text" class="input-mini no-margin" ng-model="shot.screenSize.height">
         </td>
         <td>
-          <input type="text" class="input-mini" ng-model="shot.shotSize.width"> x 
-          <input type="text" class="input-mini" ng-model="shot.shotSize.height">
+          <input type="text" class="input-mini no-margin" ng-model="shot.shotSize.width"> x 
+          <input type="text" class="input-mini no-margin" ng-model="shot.shotSize.height">
         </td>
-      <tr>
+        <td>
+          <div class="btn-group">
+            <button class="btn btn-default fa fa-exchange" ng-click="swapDimensions()"></button>
+            <button class="btn btn-default fa fa-desktop" btn-checkbox btn-checkbox-true="true"
+              btn-checkbox-false="false" ng-model="useDensity"
+              ng-click="applyDimension()"></button>
+          </div>
+        </td>
+        <tr>
+
       </tr>
     </table>
 		<div class="error" ng-show="screenShotModal.showError">{{screenShotModal.error}}</div>

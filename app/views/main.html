@@ -10,7 +10,7 @@
 		<li class="nav-header">Layers ({{activeSession.shots.length}})</li>
 		<li ng-click="activeSession.setCurrentShot(shot)" 
 				 ng-repeat="shot in activeSession.shots"
-				 ng-class="{active: activeSession.currentTab == shot.id}">
+				 ng-class="{active: activeSession.currentShot == shot}">
 				 <a>
 						<span class="fa" ng-click="shot.show = !shot.show" 
 							 ng-class="{'fa-eye': shot.show, 'fa-eye-slash': !shot.show}"></span>
@@ -74,7 +74,7 @@
 		top: activeSession.viewport.top + 41 + (shot.screenPosition.y * activeSession.viewport.zoom.level)}" 
 		class="shot-container" 
 			 zoom="activeSession.viewport.zoom.level"
-			 ng-class="{'active-tab': activeSession.currentTab == shot.id, 'opacity-hide': !shot.show}">
+			 ng-class="{'active-tab': activeSession.currentShot == shot, 'opacity-hide': !shot.show}">
 		<canvas image-canvas class="screen-shot" animate-opacity="shot.screenAnimate" 
 				 animate-time="shot.screenAnimateTime" 
 				 src="shot.path"

@@ -19,7 +19,9 @@ angular.module('pdifferenceApp').controller 'importCtrl', ($scope, $injector) ->
 
   parseSession = (session) ->
     session = JSON.parse session
-    session.shots = _.map session.shots, (shot) -> new Shot shot
+    session.shots = _.map session.shots, (shot) -> 
+      shot.id = _.uniqueId() 
+      new Shot shot
     $scope.sessions.push new Session(session)
     $scope.setActiveSession $scope.sessions[$scope.sessions.length - 1]
     $scope.$apply()

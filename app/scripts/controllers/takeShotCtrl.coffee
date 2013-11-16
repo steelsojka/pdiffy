@@ -66,6 +66,7 @@ angular.module("pdifferenceApp").controller "takeShotCtrl", ($scope, $window) ->
   $scope.viewport = $scope.viewports["Desktop"]
 
   $scope.urls = []
+  $scope.useDensity = true
   $scope.shot =
     url: ""
     screenSize:
@@ -76,11 +77,25 @@ angular.module("pdifferenceApp").controller "takeShotCtrl", ($scope, $window) ->
       height: "all"
     userAgent: $scope.userAgents["Chrome 32"]
 
-  $scope.$watch "viewport", (val) ->
-    $scope.shot.screenSize.width = Math.round val.width / val.density
-    $scope.shot.screenSize.height = Math.round val.height / val.density
-    $scope.shot.shotSize.width = Math.round val.width / val.density
-    $scope.shot.shotSize.height = Math.round val.height / val.density
+  applyDimension = ->
+    density = if $scope.useDensity then $scope.viewport.density else 1
+    $scope.shot.screenSize.width = Math.round $scope.viewport.width / density
+    $scope.shot.screenSize.height = Math.round $scope.viewport.height / density
+    $scope.shot.shotSize.width = Math.round $scope.viewport.width / density
+    $scope.shot.shotSize.height = Math.round $scope.viewport.height / density
+
+  $scope.$watch "viewport", applyDimension
+  $scope.$watch "useDensity", applyDimension
+
+  $scope.swapDimensions = ->
+    tempW = $scope.shot.screenSize.width
+    tempH = $scope.shot.screenSize.height
+    $scope.shot.screenSize.width = tempH
+    $scope.shot.screenSize.height = tempW
+    tempW = $scope.shot.shotSize.width
+    tempH = $scope.shot.shotSize.height
+    $scope.shot.shotSize.width = tempH
+    $scope.shot.shotSize.height = tempW
 
   $scope.takeShot = ->
     $scope.screenShotModal.hide()
