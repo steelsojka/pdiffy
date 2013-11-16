@@ -358,7 +358,7 @@ module.exports = function (grunt) {
     'autoprefixer',
     'concat',
     'copy:dist',
-    'copy:server',
+//    'copy:server',
     'cdnify',
     'ngmin',
     'cssmin',
