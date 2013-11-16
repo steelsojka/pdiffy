@@ -32,7 +32,7 @@
 							<table>
 								<tr>
 									<td><span class="fa fa-camera"></span> Take Screenshot...</td>
-									<td class="shortcut">Ctrl+e</td>
+									<td class="shortcut">Ctrl+s</td>
 								</tr>
 							</table>
 						</a>
@@ -50,6 +50,26 @@
 								<tr>
 									<td><span class="fa fa-group"></span> New Session</td>
 									<td class="shortcut">Ctrl+g</td>
+								</tr>
+							</table>
+						</a>
+					</li>
+					<li>
+						<a ng-click="importer.show()">
+							<table>
+								<tr>
+									<td><span class="fa fa-group"></span> Import...</td>
+									<td class="shortcut">Ctrl+i</td>
+								</tr>
+							</table>
+						</a>
+					</li>
+					<li>
+						<a ng-click="activeSession.export()">
+							<table>
+								<tr>
+									<td><span class="fa fa-group"></span> Export...</td>
+									<td class="shortcut">Ctrl+e</td>
 								</tr>
 							</table>
 						</a>
