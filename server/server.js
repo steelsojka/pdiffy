@@ -21,7 +21,7 @@ app.configure("development", function() {
 
 app.configure("production", function() {
   app.use(express.errorHandler());
-  app.use(express.static(path.join(__dirname, './../dist/app')));
+  app.use(express.static(path.join(__dirname, './../dist')));
 });
 
 
