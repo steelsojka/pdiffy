@@ -19,30 +19,47 @@ Run `pdiffy schedule [path]` to run a schedule.
 
 ### Schedule Options
 
-####output
+#### output
 The path to the file you want to save to. Make sure node has
 permissions to write to this destination. This must have the
 extension `.pdiffy` in order for it to be able to be imorted into
 the interface.
 
-####schedule
+#### schedule
 pdiffy uses [node-schdule](https://github.com/mattpat/node-schedule)
 to schedule jobs. This uses the object literal syntax. Please refer to
 it's documentation. If the schedule is absent then the job occurs only
 once.
 
-####timestamp
+#### timestamp
 Whether to add a timestamp to the filename. This is true by default
 when the schedule option is present.
 
-####options
+#### options
 pdiffy uses [node-webshot](https://github.com/brenden/node-webshot)
 to take screen shots. These options are just passed through to node-webshot.
 
-####captures
+#### captures
 An array of captures. These contain the following parameters:
 - options: Overrides the global webshot options
 - url: The url to capture
+
+### Using Progmatically
+`var pdiffy = require("pdiffy");`
+
+#### Methods
+##### startServer()
+Starts the server for the interface. Returns with a method `killServer`.
+
+##### capture(config, callback)
+Takes a config schedule object. This will only execute the capture once.
+Use `runSchedule()` when wanting to start a schedule.
+
+##### writeSession(config, session, callback)
+Writes a session to disk based on the configuration object.
+
+##### runSchedule(config, callback)
+Runs the schedule based on the schedule config object.
 
 ## Examples
 Heres an example schedule file (json):

@@ -5,13 +5,10 @@ var argv = require("optimist")
   .boolean("i")
   .boolean("interface")
   .argv;
-var capture = require("../server/capture");
-var schedule = require("node-schedule");
 var clc = require("cli-color");
 var child_process = require("child_process");
+var pdiffy = require("../lib/pdiffy");
 
-var startColor = clc.bold.underline.greenBright;
-var jobColor = clc.green;
 var uiProcess;
 
 process.env.NODE_ENV = "production"
@@ -19,14 +16,7 @@ process.env.NODE_ENV = "production"
 switch (argv._[0]) {
   case "schedule": scheduleCapture(); break;
   case "combine": combine(); break;
-  default: startServer();
-}
-
-function startServer() {
-  require("../server/server");
-
-  // TODO: get interface server to run in parallel
-  // child_process.fork("server/server");
+  default: pdiffy.startServer();
 }
 
 function combine() {
@@ -46,18 +36,8 @@ function scheduleCapture() {
   var captureConfig = require(argv._[1]);
 
   if (captureConfig.schedule) {
-    console.log(startColor("\nStarting schedule...\n"));
-
-    schedule.scheduleJob(captureConfig.schedule, function() {
-      var start = Date.now();
-      console.log(jobColor("Preforming job at ") + clc.cyan(new Date().toUTCString() + "\n"));
-      capture.capture(captureConfig, function() {
-        var time = (Date.now() - start) / 1000;
-        console.log(jobColor("\nJob finished in ") + time + "s\n");
-      });
-    });
-
+    pdiffy.runSchedule(captureConfig);
   } else {
-    capture.capture(captureConfig);
+    pdiffy.capture(captureConfig);
   }
 }
