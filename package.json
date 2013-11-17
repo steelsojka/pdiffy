@@ -1,6 +1,6 @@
 {
   "name": "pdiffy",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "preferGlobal": true,
   "author": "Steven Sojka <steelsojka@gmail.com>",
   "keywords": [
@@ -19,7 +19,10 @@
 		"socket.io": "",
     "lodash": "~2.2.1",
     "optimist": "~0.4.0",
-    "webshot": "~0.7.0"
+    "webshot": "~0.7.0",
+    "async": "~0.2.9",
+    "node-schedule": "~0.1.13",
+    "cli-color": "~0.2.3"
 	},
   "devDependencies": {
     "grunt": "~0.4.1",

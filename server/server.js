@@ -34,10 +34,16 @@ app.configure("production", function() {
   app.use(express.static(path.join(__dirname, './../dist')));
 });
 
+var server = http.createServer(app)
 
-exports.io = io.listen(http.createServer(app).listen(app.get("port"), function() {
+exports.io = io.listen(server.listen(app.get("port"), function() {
   console.log("Application running at http://localhost:" + app.get("port") + " on " + process.env.NODE_ENV);
 }));
+
+process.on('kill', function() {
+  console.log("Killing server...");
+  server.close();
+});
 
 require("./sockets");
 require("./routes");

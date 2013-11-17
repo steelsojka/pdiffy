@@ -1,10 +1,63 @@
 #!/usr/bin/env node
 
 var _ = require("lodash");
-var argv = require("optimist").argv;
+var argv = require("optimist")
+  .boolean("i")
+  .boolean("interface")
+  .argv;
+var capture = require("../server/capture");
+var schedule = require("node-schedule");
+var clc = require("cli-color");
+var child_process = require("child_process");
+
+var startColor = clc.bold.underline.greenBright;
+var jobColor = clc.green;
+var uiProcess;
 
 process.env.NODE_ENV = "production"
 
-// if (argv.i || argv.interface) {
+switch (argv._[0]) {
+  case "schedule": scheduleCapture(); break;
+  case "combine": combine(); break;
+  default: startServer();
+}
+
+function startServer() {
   require("../server/server");
-// }
+
+  // TODO: get interface server to run in parallel
+  // child_process.fork("server/server");
+}
+
+function combine() {
+  // TODO: add combining functions
+  console.log("I'm combining");
+};
+
+function scheduleCapture() {
+  if (argv._.length < 2) {
+    return;
+  }
+
+  /*if (argv.i || argv.interface) {
+    startServer();
+  }*/
+
+  var captureConfig = require(argv._[1]);
+
+  if (captureConfig.schedule) {
+    console.log(startColor("\nStarting schedule...\n"));
+
+    schedule.scheduleJob(captureConfig.schedule, function() {
+      var start = Date.now();
+      console.log(jobColor("Preforming job at ") + clc.cyan(new Date().toUTCString() + "\n"));
+      capture.capture(captureConfig, function() {
+        var time = (Date.now() - start) / 1000;
+        console.log(jobColor("\nJob finished in ") + time + "s\n");
+      });
+    });
+
+  } else {
+    capture.capture(captureConfig);
+  }
+}
