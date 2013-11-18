@@ -38,7 +38,9 @@ function scheduleCapture() {
 
   if (captureConfig.schedule) {
     pdiffy.runSchedule(captureConfig);
-  } else {
+  } else if (captureConfig.interval) {
+		pdiffy.runInterval(captureConfig);
+	} else {
     pdiffy.capture(captureConfig);
   }
 }

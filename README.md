@@ -31,6 +31,10 @@ to schedule jobs. This uses the object literal syntax. Please refer to
 it's documentation. If the schedule is absent then the job occurs only
 once.
 
+#### interval
+Interval is similar to schedule except instead of schedule a time it executes every N minutes.
+If schedule and interval are present, schedule takes priority.
+
 #### timestamp
 Whether to add a timestamp to the filename. This is true by default
 when the schedule option is present.
@@ -60,6 +64,9 @@ Writes a session to disk based on the configuration object.
 
 ##### runSchedule(config, callback)
 Runs the schedule based on the schedule config object.
+
+##### runInterval(config, callback)
+Runs the job every N minutes.
 
 ## Examples
 Heres an example schedule file (json):
