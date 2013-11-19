@@ -29,7 +29,7 @@ io.sockets.on('connection', function( socket ) {
   });
 
   socket.on("send:getConfig", function() {
-    var config = fs.readFile("server/config-defaults.json", {encoding: "utf-8"}, function(err, data) {
+    var config = fs.readFile("server/config-defaults.json", "utf8", function(err, data) {
       if (err) throw err;
       socket.emit("data:config", data);
     });

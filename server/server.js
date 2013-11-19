@@ -27,11 +27,13 @@ app.configure("development", function() {
 
   app.use(express.static(path.join(__dirname, './../.tmp')));
   app.use(express.static(path.join(__dirname, './../app')));
+  app.use(express.static(path.join(__dirname, './../lib')));
 });
 
 app.configure("production", function() {
   app.use(express.errorHandler());
   app.use(express.static(path.join(__dirname, './../dist')));
+  app.use(express.static(path.join(__dirname, './../lib')));
 });
 
 var server = http.createServer(app)

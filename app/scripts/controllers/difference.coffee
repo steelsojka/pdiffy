@@ -54,7 +54,7 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
     tempContext = tempCanvas.getContext '2d'
   
     for i in [0...workerCount]
-      worker = new Worker "scripts/worker.js"
+      worker = new Worker "difference.js"
 
       images = _.map $scope.selectedShots, (shot) ->
         width = shot.canvasContext.canvas.width
