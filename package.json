@@ -23,9 +23,9 @@
     "webshot": "~0.7.0",
     "async": "~0.2.9",
     "node-schedule": "~0.1.13",
-    "cli-color": "~0.2.3",
-    "png-js": "~0.1.1"
+    "cli-color": "~0.2.3"
 	},
+  "bundledDependencies": ["png-js"],
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",
