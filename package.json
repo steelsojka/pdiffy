@@ -24,7 +24,7 @@
     "async": "~0.2.9",
     "node-schedule": "~0.1.13",
     "cli-color": "~0.2.3",
-    "pngparse": "~2.0.1"
+    "pngjs": "~0.4.0"
 	},
   "devDependencies": {
     "grunt": "~0.4.1",

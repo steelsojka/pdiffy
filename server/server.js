@@ -36,7 +36,7 @@ app.configure("production", function() {
   app.use(express.static(path.join(__dirname, './../lib')));
 });
 
-var server = http.createServer(app)
+var server = http.createServer(app);
 
 exports.io = io.listen(server.listen(app.get("port"), function() {
   console.log("Application running at http://localhost:" + app.get("port") + " on " + process.env.NODE_ENV);
