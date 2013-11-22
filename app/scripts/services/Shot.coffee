@@ -9,7 +9,10 @@ angular.module('pdifferenceApp').factory 'Shot', ->
     constructor: (options) ->
       @id = _.uniqueId()
       @show = true
-      @data = {}
+      @data =
+        numberOfSamePixels: 0
+        numberOfDifferentPixels: 0
+        totalPixels: 0
       @displayURL = ""
       @height = 0
       @width = 0

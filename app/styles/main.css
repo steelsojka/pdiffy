@@ -262,3 +262,26 @@ select.no-margin {
   width: 1px;
   padding: 0 10px 0 0;
 }
+
+.text-small {
+  font-size: 11px;
+}
+
+table.data-table td {
+  padding: 0 5px !important;
+}
+
+.control-section.data-section {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.control-section.data-section > label {
+  margin-left: 10px;
+}
+
+.control-section[hide] > div {
+  height: 0;
+  overflow: hidden;
+}
