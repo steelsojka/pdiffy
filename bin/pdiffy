@@ -20,13 +20,25 @@ switch (argv._[0]) {
 }
 
 function combine() {
-  // TODO: add combining functions
-  console.log("I'm combining");
+  if (argv._.length < 3) {
+    console.log(status.warn("ERROR") + " Requires at least two arguments");
+    return;
+  }
+
+  if (!argv.o && !argv.output) {
+    console.log(status.warn("ERROR") + " Requires an output");
+    return;
+  }
+
+  var sessions = argv._.slice(1);
+  var output = argv.o || argv.output;
+
+  pdiffy.combine(sessions, output);
 };
 
 function scheduleCapture() {
   if (argv._.length < 2) {
-    console.log(status.warn("WARN") + " Requires at least one argument");
+    console.log(status.warn("ERROR") + " Requires at least one argument");
     return;
   }
 
@@ -41,6 +53,6 @@ function scheduleCapture() {
   } else if (captureConfig.interval) {
 		pdiffy.runInterval(captureConfig);
 	} else {
-    pdiffy.capture(captureConfig);
+    pdiffy.performJob(captureConfig);
   }
 }

@@ -17,6 +17,10 @@ Run `pdiffy schedule [path]` to run a schedule.
 
 **Currently the schedule processing does not perform differences**
 
+Run `pdiffy combine [sessions] -o [output]` to combine multiple session files.
+
+**This does not delete the original session files. This feature is coming**
+
 ### Schedule Options
 
 #### output
@@ -56,17 +60,34 @@ An array of captures. These contain the following parameters:
 Starts the server for the interface. Returns with a method `killServer`.
 
 ##### capture(config, callback)
+`Object` config - config object
+`Function` callback - callback function
+
 Takes a config schedule object. This will only execute the capture once.
 Use `runSchedule()` when wanting to start a schedule.
 
 ##### writeSession(config, session, callback)
+`Object` config - config object
+`Object` session - The session object to write to disk
+`Function` callback - callback function
+
 Writes a session to disk based on the configuration object.
 
 ##### runSchedule(config, callback)
+`Object` config - config object
+`Function` callback - callback function
+
 Runs the schedule based on the schedule config object.
 
 ##### runInterval(config, callback)
+`Object` config - config object
+`Function` callback - callback function
+
 Runs the job every N minutes.
+
+#### combine(sessionPaths, outputPath)
+`Array` sessionPaths - array of session paths
+`String` outputPath - path to write to disk
 
 ## Examples
 Heres an example schedule file (json):

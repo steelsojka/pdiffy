@@ -1,6 +1,6 @@
 {
   "name": "pdiffy",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "preferGlobal": true,
   "author": "Steven Sojka <steelsojka@gmail.com>",
   "keywords": [
@@ -25,7 +25,7 @@
     "node-schedule": "~0.1.13",
     "cli-color": "~0.2.3"
 	},
-  "bundledDependencies": ["png-js"],
+  "bundledDependencies": ["pngjs"],
   "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-copy": "~0.4.1",

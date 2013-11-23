@@ -73,7 +73,7 @@ body {
 	position: absolute;
 	max-width: 320px;
 	width: 310px;
-	top: 80px;
+	top: 50px;
 	padding: 10px 0;
 	border-top: 1px solid rgba(0,0,0,0.4);
 	border-bottom: 1px solid rgba(0,0,0,0.4);
@@ -201,6 +201,11 @@ input[type="range"] {
 	position: relative;
 	top: -4px;
 	cursor: pointer;
+}
+
+.shot-list {
+  max-height: 150px;
+  overflow: auto;
 }
 
 .shortcut {
