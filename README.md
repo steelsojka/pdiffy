@@ -60,34 +60,36 @@ An array of captures. These contain the following parameters:
 Starts the server for the interface. Returns with a method `killServer`.
 
 ##### capture(config, callback)
-`Object` config - config object
-`Function` callback - callback function
+- `Object` config - config object
+- `Function` callback - callback function
 
 Takes a config schedule object. This will only execute the capture once.
 Use `runSchedule()` when wanting to start a schedule.
 
 ##### writeSession(config, session, callback)
-`Object` config - config object
-`Object` session - The session object to write to disk
-`Function` callback - callback function
+- `Object` config - config object
+- `Object` session - The session object to write to disk
+- `Function` callback - callback function
 
 Writes a session to disk based on the configuration object.
 
 ##### runSchedule(config, callback)
-`Object` config - config object
-`Function` callback - callback function
+- `Object` config - config object
+- `Function` callback - callback function
 
 Runs the schedule based on the schedule config object.
 
 ##### runInterval(config, callback)
-`Object` config - config object
-`Function` callback - callback function
+- `Object` config - config object
+- `Function` callback - callback function
 
 Runs the job every N minutes.
 
 #### combine(sessionPaths, outputPath)
-`Array` sessionPaths - array of session paths
-`String` outputPath - path to write to disk
+- `Array` sessionPaths - array of session paths
+- `String` outputPath - path to write to disk
+
+Combine multiple session files.
 
 ## Examples
 Heres an example schedule file (json):
@@ -123,7 +125,7 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+v0.1.0 stable release
 
 ## License
 Copyright (c) 2013 Steven Sojka. Licensed under the MIT license.`
