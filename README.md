@@ -21,6 +21,9 @@ Run `pdiffy combine [sessions] -o [output]` to combine multiple session files.
 
 **This does not delete the original session files. This feature is coming**
 
+Run `pdiffy difference [paths | urls] -o [output] -t [threshold] -m [mode]` to perform differences
+and output the file. Path can be a URL or path to an image file or any combination of the two.
+
 ### Schedule Options
 
 #### output
@@ -49,8 +52,9 @@ to take screen shots. These options are just passed through to node-webshot.
 
 #### captures
 An array of captures. These contain the following parameters:
-- options: Overrides the global webshot options
-- url: The url to capture
+- `Object` options: Overrides the global webshot options
+- `String|Array` url: The url to capture or if an array or urls are passed those pages will
+   be captured and a difference will be performed from each of them.
 
 ### Using Progmatically
 `var pdiffy = require("pdiffy");`

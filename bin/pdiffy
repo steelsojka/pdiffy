@@ -6,8 +6,12 @@ var argv = require("optimist")
   .boolean("interface")
   .argv;
 var status = require("../lib/console");
+var async = require("async");
 var child_process = require("child_process");
 var pdiffy = require("../lib/pdiffy");
+var capture = require("../lib/capture");
+var fs = require("fs");
+var clc = require("cli-color");
 
 var uiProcess;
 
@@ -16,6 +20,7 @@ process.env.NODE_ENV = "production"
 switch (argv._[0]) {
   case "schedule": scheduleCapture(); break;
   case "combine": combine(); break;
+  case "difference": difference(); break;
   default: pdiffy.startServer();
 }
 
@@ -35,6 +40,53 @@ function combine() {
 
   pdiffy.combine(sessions, output);
 };
+
+function isUrl(string) {
+  return /http(s)?:\/\//.test(string);
+}
+
+function difference() {
+  if (argv._.length < 3) {
+    console.log(status.warn("ERROR") + " Requires at least two arguments");
+    return;
+  }
+
+  if (!argv.o && !argv.output) {
+    console.log(status.warn("ERROR") + " Requires an output");
+    return;
+  }
+
+  var output = argv.o || argv.output;
+
+  var options = {
+    mode: argv.m || argv.mode || "block",
+    threshold: argv.t || argv.threshold || 0
+  };
+
+  async.map(argv._.slice(1), function(path, callback) {
+    if (isUrl(path)) {
+      pdiffy.capture({captures: [{url: path}]}, function(session) {
+        callback(null, session.shots[0]);
+      });
+    } else {
+      if (!fs.existsSync(path)) {
+        throw new Error("File does not exist!");
+      }
+
+      var buffer = fs.readFileSync(path);
+
+      callback(null, {
+        displayURL: path,
+        imageBuffer: buffer
+      });
+    }
+  }, function(err, results) {
+    capture.performDiff(results, options, function(shots, diffShot) {
+      console.log(clc.green("\nFile written to ") + clc.cyan(output));
+      fs.writeFileSync(output, diffShot.path.replace(/^data:image\/png;base64,/,""), "base64") 
+    });
+  });
+}
 
 function scheduleCapture() {
   if (argv._.length < 2) {
