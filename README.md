@@ -95,6 +95,18 @@ Runs the job every N minutes.
 
 Combine multiple session files.
 
+#### compare(options)
+- `Object` options - config options
+  * `Array` paths - Array of paths. Can be a URL or path to a file.
+  * `Object` [captureOptions] - Options for capturing URLs.
+  * `Object` [diffOptions] - Options for difference processing.
+  * `String` [output] - Output path to a file. If no output is
+    provided the callback will get passed the data.
+  * `Function` [callback] - Function to receive data when an output
+    is not provided.
+
+Takes an array of paths and performs a difference on them.
+
 ## Examples
 Heres an example schedule file (json):
 ```json
@@ -129,7 +141,15 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-v0.1.0 stable release
+v0.1.3
+- code reorganization of modules
+- better console output
+
+v0.1.2
+- ability to perform differences from cli
+
+v0.1.0
+- stable release
 
 ## License
 Copyright (c) 2013 Steven Sojka. Licensed under the MIT license.`

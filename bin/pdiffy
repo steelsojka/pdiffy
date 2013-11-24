@@ -26,12 +26,12 @@ switch (argv._[0]) {
 
 function combine() {
   if (argv._.length < 3) {
-    console.log(status.warn("ERROR") + " Requires at least two arguments");
+    status.log(status.warn("ERROR") + " Requires at least two arguments");
     return;
   }
 
   if (!argv.o && !argv.output) {
-    console.log(status.warn("ERROR") + " Requires an output");
+    status.log(status.warn("ERROR") + " Requires an output");
     return;
   }
 
@@ -41,56 +41,53 @@ function combine() {
   pdiffy.combine(sessions, output);
 };
 
-function isUrl(string) {
-  return /http(s)?:\/\//.test(string);
-}
 
 function difference() {
   if (argv._.length < 3) {
-    console.log(status.warn("ERROR") + " Requires at least two arguments");
+    status.log(status.warn("ERROR") + " Requires at least two arguments");
     return;
   }
 
   if (!argv.o && !argv.output) {
-    console.log(status.warn("ERROR") + " Requires an output");
+    status.log(status.warn("ERROR") + " Requires an output");
     return;
   }
 
   var output = argv.o || argv.output;
+  var shotWidth = argv.sw || argv.shotwidth;
+  var shotHeight = argv.sh || argv.shotheight;
+  var windowWidth = argv.ww || argv.windowwidth;
+  var windowHeight = argv.wh || argv.windowheight;
 
   var options = {
     mode: argv.m || argv.mode || "block",
     threshold: argv.t || argv.threshold || 0
   };
 
-  async.map(argv._.slice(1), function(path, callback) {
-    if (isUrl(path)) {
-      pdiffy.capture({captures: [{url: path}]}, function(session) {
-        callback(null, session.shots[0]);
-      });
-    } else {
-      if (!fs.existsSync(path)) {
-        throw new Error("File does not exist!");
-      }
-
-      var buffer = fs.readFileSync(path);
-
-      callback(null, {
-        displayURL: path,
-        imageBuffer: buffer
-      });
+  var captureOptions = {
+    shotSize: {
+      width: shotWidth || 1024,
+      height: shotHeight || 768
+    },
+    windowSize: {
+      width: windowWidth || 1024,
+      height: windowHeight || 768
     }
-  }, function(err, results) {
-    capture.performDiff(results, options, function(shots, diffShot) {
-      console.log(clc.green("\nFile written to ") + clc.cyan(output));
-      fs.writeFileSync(output, diffShot.path.replace(/^data:image\/png;base64,/,""), "base64") 
-    });
+  };
+
+  var paths = argv._.slice(1);
+
+  pdiffy.compare({
+    captureOptions: captureOptions,
+    diffOptions: options,
+    output: output,
+    paths: paths
   });
 }
 
 function scheduleCapture() {
   if (argv._.length < 2) {
-    console.log(status.warn("ERROR") + " Requires at least one argument");
+    status.log(status.warn("ERROR") + " Requires at least one argument");
     return;
   }
 
