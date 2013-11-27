@@ -1,7 +1,6 @@
 {
   "name": "pdiffy",
-  "version": "0.2.2",
-  "preferGlobal": true,
+  "version": "0.2.3",
   "author": "Steven Sojka <steelsojka@gmail.com>",
   "keywords": [
     "pdiff",
