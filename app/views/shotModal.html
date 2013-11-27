@@ -17,7 +17,7 @@
       <tr>
         <td>
           <div>
-            <select class="no-margin" ng-model="shot.userAgent" ng-options="agent as name for (name, agent) in userAgents"></select>
+            <select class="no-margin" ng-model="shot.options.userAgent" ng-options="agent as name for (name, agent) in userAgents"></select>
           </div>
         </td>
         <td>
@@ -29,12 +29,12 @@
         <td><h5>Shot Size:</h5></td>
       </tr>
         <td>
-          <input type="text" class="input-mini no-margin" ng-model="shot.screenSize.width"> x 
-          <input type="text" class="input-mini no-margin" ng-model="shot.screenSize.height">
+          <input type="text" class="input-mini no-margin" ng-model="shot.options.screenSize.width"> x 
+          <input type="text" class="input-mini no-margin" ng-model="shot.options.screenSize.height">
         </td>
         <td>
-          <input type="text" class="input-mini no-margin" ng-model="shot.shotSize.width"> x 
-          <input type="text" class="input-mini no-margin" ng-model="shot.shotSize.height">
+          <input type="text" class="input-mini no-margin" ng-model="shot.options.shotSize.width"> x 
+          <input type="text" class="input-mini no-margin" ng-model="shot.options.shotSize.height">
         </td>
         <td>
           <div class="btn-group">

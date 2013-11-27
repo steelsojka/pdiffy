@@ -50,6 +50,11 @@ when the schedule option is present.
 pdiffy uses [node-webshot](https://github.com/brenden/node-webshot)
 to take screen shots. These options are just passed through to node-webshot.
 
+These also can contain an object containing plugins.
+
+`Object` option.plugins - keys are plugin names and values are a hash of parameters.
+                          Refer to the documentation in the plugins folder.
+
 #### captures
 An array of captures. These contain the following parameters:
 - `Object` options: Overrides the global webshot options

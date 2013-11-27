@@ -2,10 +2,10 @@
 
 // Main sockets object
 var io = require( './../server' ).io;
-var webshot = require("webshot");
 var fs = require('fs');
 var _ = require("lodash");
 var path = require("path");
+var capture = require("./../../lib/capture").capture;
 
 // Connection route - bootstraps the other socket routes
 io.sockets.on('connection', function( socket ) {
@@ -16,16 +16,8 @@ io.sockets.on('connection', function( socket ) {
 	});
 
   socket.on("send:takeShot", function(shot) {
-    webshot(shot.url, _.omit(shot, "url"), function(err, stream) {
-      stream.on('data', function(data) {
-        socket.emit('data:chunk', {data: data.toString('binary')});
-      });
-
-      stream.on("end", function() {
-        socket.emit('data:end', {
-          message: 'Data End'
-        });
-      });
+    capture({captures: [shot]}, function(session) {
+      socket.emit('data:end', {data: session.shots[0].path});
     });
   });
 
@@ -41,9 +33,5 @@ io.sockets.on('connection', function( socket ) {
       if (err) throw err;
     });*/
   });
-
-	// Example socket
-	// @todo remove the requirement to pass in the socket
-	// require( './example' )( socket );
 
 });

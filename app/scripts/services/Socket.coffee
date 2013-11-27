@@ -22,20 +22,16 @@ angular.module("pdifferenceApp").factory "Socket", (Shot, $document) ->
       url = shotData.url
       @takingShot = true
       
-      onChunk = (data) -> buffers += data.data
       onEnd = (data) =>
-        image = "data:image/png;base64,#{btoa buffers}"
         @io.removeListener 'data:end', onEnd
-        @io.removeListener 'data:chunk', onChunk
         @session.addShot new Shot
           displayURL: url
-          path: image
+          path: data.data
           width: shotData.shotWidth
           height: shotData.shotHeight
         callback()
        
       @io.emit "send:takeShot", shotData
-      @io.on "data:chunk", onChunk
       @io.on "data:end", onEnd
 
     getConfig: (callback) ->
