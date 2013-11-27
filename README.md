@@ -7,15 +7,13 @@ for comparing different states of a website.
 Install the module with: `npm install -g pdiffy`
 
 ## Documentation
-Run `pdiffy` to start the interface and web server.
+Run `pdiffy server` to start the interface and web server.
 
 You can run a schedule process that creates `sessions` at different intervals.
 Screen shots taken get embedded into the session file.
 The session can be imported into the interface.
 
-Run `pdiffy schedule [path]` to run a schedule.
-
-**Currently the schedule processing does not perform differences**
+Run `pdiffy [path]` to run a job based on a config.
 
 Run `pdiffy combine [sessions] -o [output]` to combine multiple session files.
 
@@ -24,7 +22,7 @@ Run `pdiffy combine [sessions] -o [output]` to combine multiple session files.
 Run `pdiffy difference [paths | urls] -o [output] -t [threshold] -m [mode]` to perform differences
 and output the file. Path can be a URL or path to an image file or any combination of the two.
 
-### Schedule Options
+### Job Options
 
 #### output
 The path to the file you want to save to. Make sure node has
@@ -57,8 +55,8 @@ These also can contain an object containing plugins.
 
 #### captures
 An array of captures. These contain the following parameters:
-- `Object` options: Overrides the global webshot options
-- `String|Array` url: The url to capture or if an array or urls are passed those pages will
+- `Object` options - Overrides the global options
+- `String|Array` url - The url to capture or if an array or urls are passed those pages will
    be captured and a difference will be performed from each of them.
 
 ### Using Progmatically
@@ -75,32 +73,19 @@ Starts the server for the interface. Returns with a method `killServer`.
 Takes a config schedule object. This will only execute the capture once.
 Use `runSchedule()` when wanting to start a schedule.
 
-##### writeSession(config, session, callback)
-- `Object` config - config object
-- `Object` session - The session object to write to disk
-- `Function` callback - callback function
-
-Writes a session to disk based on the configuration object.
-
-##### runSchedule(config, callback)
+##### run(config, callback)
 - `Object` config - config object
 - `Function` callback - callback function
 
-Runs the schedule based on the schedule config object.
+Runs a job based on the config object.
 
-##### runInterval(config, callback)
-- `Object` config - config object
-- `Function` callback - callback function
-
-Runs the job every N minutes.
-
-#### combine(sessionPaths, outputPath)
+##### combine(sessionPaths, outputPath)
 - `Array` sessionPaths - array of session paths
 - `String` outputPath - path to write to disk
 
 Combine multiple session files.
 
-#### compare(options)
+##### compare(options)
 - `Object` options - config options
   * `Array` paths - Array of paths. Can be a URL or path to a file.
   * `Object` [captureOptions] - Options for capturing URLs.
@@ -124,6 +109,11 @@ Heres an example schedule file (json):
     "shotSize": {
       "width": "all",
       "height": "all"
+    },
+    "plugins": {
+      "hideElements": {
+        "selectors": ["#myId"]
+      }
     }
   },
   "captures": [
@@ -131,8 +121,11 @@ Heres an example schedule file (json):
       "options": {},
       "url": "http://google.com"
     }, {
-      "options": {},
-      "url": "http://cnn.com"
+      "options": {
+        "threshold": 30,
+        "mode": "block"
+      },
+      "url": ["http://cnn.com", "http://msnbc.com"]
     }, {
       "options": {},
       "url": "http://espn.com"
@@ -146,6 +139,13 @@ In lieu of a formal styleguide, take care to maintain the existing coding style.
 Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
+v0.2.1
+- simplified API **BREAKING CHANGE**
+
+v0.2.0
+- support for plugins
+- better console output
+
 v0.1.3
 - code reorganization of modules
 - better console output

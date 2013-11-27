@@ -1,37 +1,31 @@
 #!/usr/bin/env node
 
 var _ = require("lodash");
-var argv = require("optimist")
-  .boolean("i")
-  .boolean("interface")
-  .argv;
+var argv = require("optimist").argv;
 var status = require("../lib/console");
 var async = require("async");
 var child_process = require("child_process");
 var pdiffy = require("../lib/pdiffy");
-var capture = require("../lib/capture");
 var fs = require("fs");
 var clc = require("cli-color");
 
-var uiProcess;
-
-process.env.NODE_ENV = "production"
+process.env.NODE_ENV = "production";
 
 switch (argv._[0]) {
-  case "schedule": scheduleCapture(); break;
   case "combine": combine(); break;
   case "difference": difference(); break;
-  default: pdiffy.startServer();
+  case "server": pdiffy.startServer(); break;
+  default: scheduleCapture(); break;
 }
 
 function combine() {
   if (argv._.length < 3) {
-    status.log(status.warn("ERROR") + " Requires at least two arguments");
+    status.error("requires at least two arguments");
     return;
   }
 
   if (!argv.o && !argv.output) {
-    status.log(status.warn("ERROR") + " Requires an output");
+    status.error("requires an output");
     return;
   }
 
@@ -44,12 +38,12 @@ function combine() {
 
 function difference() {
   if (argv._.length < 3) {
-    status.log(status.warn("ERROR") + " Requires at least two arguments");
+    status.error("requires at least two arguments");
     return;
   }
 
   if (!argv.o && !argv.output) {
-    status.log(status.warn("ERROR") + " Requires an output");
+    status.error("requires an output");
     return;
   }
 
@@ -86,22 +80,12 @@ function difference() {
 }
 
 function scheduleCapture() {
-  if (argv._.length < 2) {
-    status.log(status.warn("ERROR") + " Requires at least one argument");
+  if (argv._.length < 1) {
+    status.error("requires at least one argument");
     return;
   }
 
-  /*if (argv.i || argv.interface) {
-    startServer();
-  }*/
+  var captureConfig = require(argv._[0]);
 
-  var captureConfig = require(argv._[1]);
-
-  if (captureConfig.schedule) {
-    pdiffy.runSchedule(captureConfig);
-  } else if (captureConfig.interval) {
-		pdiffy.runInterval(captureConfig);
-	} else {
-    pdiffy.performJob(captureConfig);
-  }
+  pdiffy.run(captureConfig);
 }
