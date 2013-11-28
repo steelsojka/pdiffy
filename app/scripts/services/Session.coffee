@@ -7,6 +7,7 @@ angular.module("pdifferenceApp").factory "Session", ($injector) ->
 
   exportProps = ['id', 'name']
 
+  # Session is a global class
   class AppSession extends Session
     constructor: (options) ->
       Session.call this, options
@@ -16,7 +17,7 @@ angular.module("pdifferenceApp").factory "Session", ($injector) ->
 
     export: ->
       file = super
-      url = "data:application/json;charset=utf8,#{JSON.stringify file}"
+      url = "data:application/json;charset=utf8,#{file}"
       link = $document[0].createElement 'a'
       link.href = url
       link.download = "#{@name}.pdiffy"

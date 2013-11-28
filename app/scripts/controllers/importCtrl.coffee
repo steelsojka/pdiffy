@@ -26,4 +26,6 @@ angular.module('pdifferenceApp').controller 'importCtrl', ($scope, $injector) ->
     $scope.setActiveSession $scope.sessions[$scope.sessions.length - 1]
     $scope.$apply()
 
+  return
+
 
