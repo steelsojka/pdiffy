@@ -70,6 +70,12 @@ module.exports = function (grunt) {
           ]
         }
       },
+      jasmine_node: {
+        specNameMatcher: "./specs",
+        projectRoot: ".",
+        requirejs: false,
+        forceExit: true
+      },
       test: {
         options: {
           port: 9001,
@@ -86,6 +92,13 @@ module.exports = function (grunt) {
         }
       }
     },
+    mkdir: {
+      tests: {
+        options: {
+          create: ["specs/tmp"]
+        }
+      }
+    },
     clean: {
       dist: {
         files: [{
@@ -97,7 +110,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      tests: 'specs/tmp'
     },
     jshint: {
       options: {
@@ -344,11 +358,14 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('test', [
-    'clean:server',
+    'clean:tests',
+    'mkdir:tests',
+    'jasmine_node'
+/*    'clean:server',
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma'*/
   ]);
 
   grunt.registerTask('build', [

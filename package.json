@@ -49,7 +49,9 @@
     "grunt-google-cdn": "~0.2.0",
     "grunt-ngmin": "~0.0.2",
     "time-grunt": "~0.1.0",
-		"grunt-nodemon": "~0.1.1"
+		"grunt-nodemon": "~0.1.1",
+    "grunt-jasmine-node": "0.1.x",
+    "grunt-mkdir": "~0.1.x"
   },
   "bin": {
     "pdiffy": "./bin/pdiffy"
