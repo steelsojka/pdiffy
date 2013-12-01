@@ -64,8 +64,8 @@ describe("difference.js", function() {
     var output = difference.compute({
       imageData: [img1, img2],
       contextData: diffImg,
-      threshold: 0,
       id: 1,
+      mode: "subtraction",
       block: 0,
       startY: 0
     });
@@ -85,7 +85,12 @@ describe("difference.js", function() {
     var output = difference.compute({
       imageData: [img1, img2],
       contextData: diffImg,
-      threshold: 50,
+      mode: "subtraction",
+      tolerance: {
+        red: 50,
+        green: 50,
+        blue: 50
+      },
       id: 1,
       block: 0,
       startY: 0
@@ -99,6 +104,29 @@ describe("difference.js", function() {
       255,255,255,255
     ]);
 
+  });
+
+  it("should perform a difference ignoring colors", function() {
+    var diffImg = {data: []};
+    var output = difference.compute({
+      imageData: [img1, img2],
+      contextData: diffImg,
+      ignoreColors: true,
+      tolerance: {
+        minBrightness: 50
+      },
+      id: 1,
+      block: 0,
+      startY: 0
+    });
+
+    compare(output.data.data, [
+      255,255,0,255,
+      0,0,0,255,
+      156,156,156,255,
+      0,0,0,255,
+      255,255,0,255
+    ]);
   });
 
   function compare(actual, expected) {
