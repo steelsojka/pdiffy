@@ -11,13 +11,15 @@ Run `pdiffy server` to start the interface and web server.
 
 You can run a schedule process that creates `sessions` at different intervals.
 Screen shots taken get embedded into the session file.
-The session can be imported into the interface.
+The session can be imported into the interface. pdiffy may need to run with root
+permissions depending on where it is installed. PhantomJS writes to a directory where
+it is installed and the user would need write permissions.
 
 Run `pdiffy [path]` to run a job based on a config.
 
 Run `pdiffy combine [sessions] -o [output]` to combine multiple session files.
 
-**This does not delete the original session files. This feature is coming**
+**This does not delete the original session files.**
 
 Run `pdiffy difference [paths | urls] -o [output] -t [threshold] -m [mode]` to perform differences
 and output the file. Path can be a URL or path to an image file or any combination of the two.
