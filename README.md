@@ -52,8 +52,15 @@ to take screen shots. These options are just passed through to node-webshot.
 
 These also can contain an object containing plugins.
 
-`Object` option.plugins - keys are plugin names and values are a hash of parameters.
+- `Object` options.plugins - keys are plugin names and values are a hash of parameters.
                           Refer to the documentation in the plugins folder.
+- `String` options.mode - Mode to perform difference if one is being performed.
+- `Boolean` options.ignoreColors - Uses brightness to calculate difference other than RGB values.
+- `Object` options.tolerance - Object with value tolerances
+  * `Number` red - Tolerance for red values
+  * `Number` green - Tolerance for green values
+  * `Number` blue - Tolerance for blue values
+  * `Number` minBrightness - Tolerance for minimum brightness
 
 #### captures
 An array of captures. These contain the following parameters:
@@ -61,7 +68,7 @@ An array of captures. These contain the following parameters:
 - `String|Array` url - The url to capture or if an array or urls are passed those pages will
    be captured and a difference will be performed from each of them.
 
-### Using Progmatically
+### Using Programmatically
 `var pdiffy = require("pdiffy");`
 
 #### Methods
@@ -124,7 +131,11 @@ Heres an example schedule file (json):
       "url": "http://google.com"
     }, {
       "options": {
-        "threshold": 30,
+        "tolerance": {
+          "red": 50,
+          "green": 16,
+          "blue": 16
+        },
         "mode": "block"
       },
       "url": ["http://cnn.com", "http://msnbc.com"]

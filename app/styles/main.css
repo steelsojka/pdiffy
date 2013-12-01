@@ -258,6 +258,7 @@ td.shortcut {
   width: 100%;
 }
 
+.no-margin,
 input.no-margin,
 select.no-margin {
   margin: 0 !important;

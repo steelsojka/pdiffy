@@ -4,8 +4,14 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
   Shot = $injector.get "Shot"
 
   $scope.selectedShots = []
-  $scope.diffMode = "subtraction"
-  $scope.diffThreshold = 0
+  $scope.diffMode = "block"
+  $scope.ignoreColors = false
+  $scope.tolerance =
+    red: 16
+    green: 16
+    blue: 16
+    minBrightness: 16
+
 
   setCurrentShots = ->
     $scope.activeSession.shots.forEach (shot) ->  shot.selectedForDifference = false
@@ -86,7 +92,8 @@ angular.module('pdifferenceApp').controller "differenceCtrl", ($scope, $injector
         block: block
         id: i
         mode: $scope.diffMode
-        threshold: $scope.diffThreshold
+        tolerance: $scope.tolerance
+        ignoreColors: $scope.ignoreColors
 
       worker.addEventListener "message", (e) ->
         if e.data.event is "progress"
