@@ -4,7 +4,7 @@ pdiffy is a perceptual difference tool used to compare images for differences. T
 for comparing different states of a website.
 
 ## Getting Started
-Install the module with: `npm install -g pdiffy`
+Install the module with: `npm install pdiffy`
 
 ## Documentation
 Run `pdiffy server` to start the interface and web server.
@@ -150,34 +150,6 @@ Heres an example schedule file (json):
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. 
 Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-## Release History
-v0.2.4
-- allow callback for each job execution
-
-v0.2.3
-- bug fixes
-- better logging
-
-v0.2.2
-- bug fix
-
-v0.2.1
-- simplified API **BREAKING CHANGE**
-
-v0.2.0
-- support for plugins
-- better console output
-
-v0.1.3
-- code reorganization of modules
-- better console output
-
-v0.1.2
-- ability to perform differences from cli
-
-v0.1.0
-- stable release
 
 ## License
 Copyright (c) 2013 Steven Sojka. Licensed under the MIT license.`
